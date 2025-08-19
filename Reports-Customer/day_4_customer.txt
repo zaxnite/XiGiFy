@@ -1,0 +1,124 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-19 19:52:01
+Source file: day_4.json
+Report type: customer
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-14T00:00:00+08:00 to 2025-08-14T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 34.0%
+- AC on: 57.0%
+- Fan on: 30.0%
+- Occupancy detected: 49.0%
+- Window open: 9.0%
+- Door open: 3.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 11.0%
+- Light on while unoccupied: 4.0%
+- AC on while window open: 5.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.4 kWh
+- AC: 10.2 kWh
+- Fan: 0.9 kWh
+- Total: 12.5 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 14 on/14 off
+- AC cycles: 14 on/14 off
+- Fan cycles: 15 on/15 off
+- Door events: 55 opens
+- Occupancy events: 20 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 60.0 min
+- AC avg runtime: 80.3 min
+- Fan avg runtime: 55.1 min
+- Occupancy avg duration: 75.0 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1295.9W
+- AC power drift detected: True
+- Light power average: 60.2W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 14.3% deviation
+- Light vs weekly pattern: 0.8% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1050/3300/6600 seconds
+- Occupancy intervals: 1650/5100/10200 seconds
+
+SENSOR HEALTH:
+- occupancy sensor: signal_degradation at 2025-08-14T14:02:00+08:00
+
+MANUAL OVERRIDES:
+- ac: 4 overrides
+- fan: 2 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## 🚀 EXECUTIVE SUMMARY
+
+The Director's Room shows moderate energy efficiency, with opportunities for improvement in cooling management.  The most significant savings can be achieved by automating the AC system to turn off when unoccupied and integrating window sensors to prevent simultaneous cooling and window openings.  These measures could save an estimated AED 200 annually.
+
+
+## 🌡️ HOW IS THE ROOM PERFORMING?
+
+The room's comfort levels are not directly measurable from this data. However, we can assess energy use in relation to occupancy. The AC ran 11% of the time while the room was unoccupied, and lights were left on 4% of the time while unoccupied.  Additionally, the AC ran while windows were open 5% of the time. There was a slight deviation (14.3%) between the AC usage and the typical weekly pattern.  A signal degradation was detected in the occupancy sensor at 2:02 PM.  Benchmark data is not available.
+
+
+## 💡 ENERGY WASTE: WHERE IS POWER BEING WASTED?
+
+* **Unoccupied Cooling:** The AC ran for approximately 11% of the time while the room was empty. This amounts to 1.12 kWh of wasted energy. This could add roughly AED 15 to your monthly bill. (Based on 11% of 10.2 kWh total AC usage).
+
+* **Cooling with Open Windows:** The AC ran for 5% of the time with a window open, leading to unnecessary energy consumption and reduced cooling efficiency. This small percentage contributes to a possible additional AED 5 - AED 10 to your monthly electricity cost. (Based on 5% of 10.2 kWh).
+
+* **Lights left on when unoccupied:** Lights were on 4% of the time without occupancy in the room. This represents a small energy waste of 0.056 kWh, which would minimally impact monthly electricity costs.
+
+
+## ⚠️ ANY WARNING SIGNS IN THE SYSTEM?
+
+* **Occupancy Sensor Degradation:** A signal degradation was detected in the occupancy sensor at 2:02 PM. This warrants immediate attention to ensure accurate occupancy detection for optimal energy management.
+* **AC Power Drift:** The AC showed power drift, indicating a potential issue requiring further investigation.
+
+
+## 🕒 HOW IS THE ROOM BEING USED?
+
+The Director's Room was occupied roughly 49% of the time, with an average occupancy duration of 75 minutes per detection.  The lights and AC cycled on and off 14 times each. The door opened 55 times throughout the day.  The room shows normal usage patterns; however, further analysis is needed to pinpoint how these usage trends relate to energy consumption.
+
+## 🔗 WHAT'S HAPPENING WITH SENSORS AND CONTROLS?
+
+The AC system was manually overridden 4 times, and the fan 2 times.  There's a lack of apparent coordination between the AC and window sensors (AC ran while windows were open 5% of the time). Automation could significantly improve energy efficiency and comfort.
+
+## ✅ WHAT CAN BE IMPROVED? (ACTIONABLE NEXT STEPS)
+
+* **Automate AC shutoff:** Implement an automated system to turn off the AC when the room is unoccupied. This will eliminate the 11% wasted energy, saving an estimated AED 15-AED 20 monthly.
+
+* **Integrate Window Sensors:** Connect window sensors to the AC system to automatically shut down cooling when a window is open. This will prevent further energy waste and optimize cooling efficiency, potentially saving additional AED 5-AED 10 monthly.
+
+* **Inspect and/or Replace Occupancy Sensor:** Investigate the reported signal degradation in the occupancy sensor at 2:02 PM. If necessary, replace the sensor to ensure accurate occupancy detection for energy-saving automation.
+
+* **Investigate AC Power Drift:** Investigate the reported AC power drift to identify and address any potential issues causing inefficiency or equipment problems.
+
+* **Review Manual Overrides:** Analyze the reasons behind manual AC and fan overrides. Consider implementing a system that allows for manual overrides but keeps energy savings as a priority.
+
+
+====================================================================================================
+End of Report
+====================================================================================================

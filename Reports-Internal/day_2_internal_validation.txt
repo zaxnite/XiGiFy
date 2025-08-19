@@ -1,0 +1,96 @@
+## 1. DATA EXTRACTION ACCURACY
+
+* **Timestamps:** Correctly reported (`2025-08-12T00:00:00+08:00` to `2025-08-12T23:59:59+08:00`). ✅
+* **Usage Patterns:** All percentages match JSON:
+
+  * Light: 36% ✅
+  * AC: 48% ✅
+  * Fan: 21% ✅
+  * Occupancy: 52% ✅
+  * Window open: 6% ✅
+  * Door open: 2% ✅
+* **Cross-Sensor Ratios / Efficiency Metrics:** Matches JSON values. ✅
+* **Energy Consumption:** Matches JSON kWh values:
+
+  * Light: 1.6
+  * AC: 8.6
+  * Fan: 0.8 (JSON has 0.75 kWh, slight rounding up to 0.8 kWh) ⚠️
+  * Total: 10.9 kWh (sum matches report, minor rounding) ⚠️
+* **Device Activity / Event Counts:** Mostly accurate, except:
+
+  * Door events report only "48 opens" but JSON shows 48 closes also missing ⚠️
+  * Window events report 6% open in usage patterns but raw counts are 5 open/5 close; minor mismatch in interpretation ⚠️
+* **Run Length Statistics:** Average runtimes correct; variance omitted in report (JSON provides variance). ⚠️
+* **Power Drift / Anomalies:** Correctly reported. ✅
+* **Seasonal Patterns & Inter-event Intervals:** Correctly extracted. ✅
+* **Sensor Health:** Correctly reports door sensor battery\_low event with timestamp. ✅
+* **Manual Overrides:** Correctly reported AC overrides (2). ✅
+
+**Summary:** Data extraction is mostly accurate (\~93–95%). Minor issues: fan kWh rounding, missing variance and door/window close counts.
+
+---
+
+## 2. CALCULATION VALIDITY
+
+* **Wasted energy computations:**
+
+  * AC while unoccupied: 8.6 × 0.06 = 0.516 kWh ✅
+  * Light while unoccupied: 1.6 × 0.02 = 0.032 kWh ✅
+  * AC while window open: 8.6 × 0.02 = 0.172 kWh ✅
+* **Other calculations:** Correct; total energy properly summed (minor rounding). ✅
+
+---
+
+## 3. SENSOR HEALTH & ANOMALY HANDLING
+
+* **Sensor health events:** JSON shows `door: battery_low` → correctly reported. ✅
+* **Anomaly flags:** All correctly reported:
+
+  * AC rapid cycling: False
+  * Light stuck: False
+  * Occupancy sensor stuck: False
+  * AC/light power drift: False
+* **No hallucinated issues** detected. ✅
+
+---
+
+## 4. LOGICAL CONSISTENCY & HALLUCINATIONS
+
+* **Unsupported claims / minor inference:**
+
+  * "Difference in AC vs light/fan runtimes may indicate operational issue or user preference" → interpretive but reasonable. ⚠️
+  * "High number of cycles warrants investigation" → speculative, not directly derived from thresholds. ⚠️
+* **All other behavioral statements** (occupancy correlation, intervals, seasonal patterns) are consistent with JSON. ✅
+* **Peak usage times correctly marked as not available.** ✅
+
+---
+
+## 5. ANALYTICAL SOUNDNESS
+
+* **Energy inefficiency insights:** Correct, arithmetic accurate. ✅
+* **Behavioral / correlation analyses:** Logical and mostly data-supported. Minor assumptions flagged. ⚠️
+* **Recommendations:** Clear, actionable, aligned with findings:
+
+  * Energy savings
+  * System optimization
+  * Maintenance (replace battery)
+  * Automation improvements
+  * User behavior modifications
+* **Clarity & structure:** Excellent; well-organized. ✅
+
+---
+
+## 6. FINAL VERDICT
+
+* **Overall accuracy:** \~93–95% correct.
+* **Reliability for operational use:** Reliable, but minor rounding issues and missing variance/close counts should be addressed for precise auditing.
+* **Critical errors:** None that mislead operations.
+* **Minor improvements:**
+
+  * Include variance statistics for all runtime metrics.
+  * Report door/window close counts for completeness.
+  * Adjust fan kWh from 0.8 to exact 0.75 kWh.
+  * Clearly distinguish interpretive insights from direct data evidence.
+
+**Conclusion:** The report is mostly accurate and actionable, with minor omissions and rounding discrepancies that do not materially compromise operational utility.
+

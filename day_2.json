@@ -1,0 +1,83 @@
+{
+    "room_id": "DirectorRoom",
+    "summary_window": {
+      "start": "2025-08-12T00:00:00+08:00",
+      "end": "2025-08-12T23:59:59+08:00"
+    },
+    "ml_abstracted_metrics": {
+      "usage_features": {
+        "light_on_pct": 0.36,
+        "ac_on_pct": 0.48,
+        "fan_on_pct": 0.21,
+        "occupancy_detected_pct": 0.52,
+        "window_open_pct": 0.06,
+        "door_open_pct": 0.02
+      },
+      "runtime_features": {
+        "light_active_pct": 0.36,
+        "ac_active_pct": 0.48,
+        "fan_active_pct": 0.21,
+        "occupancy_active_pct": 0.52,
+        "window_open_active_pct": 0.06,
+        "door_open_active_pct": 0.02
+      },
+      "cross_sensor_ratios": {
+        "ac_on_while_unoccupied_pct": 0.06,
+        "light_on_while_unoccupied_pct": 0.02,
+        "ac_on_while_window_open_pct": 0.02
+      },
+      "run_length_statistics": {
+        "light": {"avg_min": 60.5, "variance_min2": 155.0},
+        "ac": {"avg_min": 88.2, "variance_min2": 220.1},
+        "fan": {"avg_min": 46.0, "variance_min2": 98.3},
+        "occupancy": {"avg_min": 76.8, "variance_min2": 185.4},
+        "window_open": {"avg_min": 11.1, "variance_min2": 16.2},
+        "door_open": {"avg_s": 20.9, "variance_s2": 41.5}
+      },
+      "rolling_statistics_and_drift": {
+        "ac_power_avg_w5m": 1215.7,
+        "ac_power_drift_flag": false,
+        "light_power_avg_w5m": 60.3,
+        "light_power_drift_flag": false
+      },
+      "pattern_deviation_flags": {
+        "ac_rapid_cycle_flag": false,
+        "light_stuck_flag": false,
+        "occupancy_sensor_stuck_flag": false
+      },
+      "seasonal_pattern_summaries": {
+        "ac_vs_weekly_pct": 5.1,
+        "light_vs_weekly_pct": 1.5
+      },
+      "inter_event_distributions": {
+        "door_open_intervals_s": {"p50": 1150, "p90": 3500, "p99": 7000},
+        "occupancy_intervals_s": {"p50": 1750, "p90": 5300, "p99": 10600}
+      }
+    },
+    "raw_stream_derived_metrics": {
+      "event_counts_and_timing": {
+        "light": {"on_count": 16, "off_count": 16},
+        "ac": {"on_count": 9, "off_count": 9},
+        "fan": {"on_count": 11, "off_count": 11},
+        "window": {"open_count": 5, "close_count": 5},
+        "door": {"open_count": 48, "close_count": 48},
+        "occupancy": {"detected_count": 22, "cleared_count": 22}
+      },
+      "energy_proxy_metrics": {
+        "light_kwh": 1.6,
+        "ac_kwh": 8.6,
+        "fan_kwh": 0.75
+      },
+      "sensor_health_events": [
+        {
+          "sensor": "door",
+          "event": "battery_low",
+          "timestamp": "2025-08-12T18:05:00+08:00"
+        }
+      ],
+      "manual_override_counters": [
+        {"device": "ac", "count": 2}
+      ]
+    }
+  }
+  

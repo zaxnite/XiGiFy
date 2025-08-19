@@ -1,0 +1,123 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-19 19:46:15
+Source file: day_2.json
+Report type: internal
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-12T00:00:00+08:00 to 2025-08-12T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 36.0%
+- AC on: 48.0%
+- Fan on: 21.0%
+- Occupancy detected: 52.0%
+- Window open: 6.0%
+- Door open: 2.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 6.0%
+- Light on while unoccupied: 2.0%
+- AC on while window open: 2.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.6 kWh
+- AC: 8.6 kWh
+- Fan: 0.8 kWh
+- Total: 10.9 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 16 on/16 off
+- AC cycles: 9 on/9 off
+- Fan cycles: 11 on/11 off
+- Door events: 48 opens
+- Occupancy events: 22 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 60.5 min
+- AC avg runtime: 88.2 min
+- Fan avg runtime: 46.0 min
+- Occupancy avg duration: 76.8 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1215.7W
+- AC power drift detected: False
+- Light power average: 60.3W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 5.1% deviation
+- Light vs weekly pattern: 1.5% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1150/3500/7000 seconds
+- Occupancy intervals: 1750/5300/10600 seconds
+
+SENSOR HEALTH:
+- door sensor: battery_low at 2025-08-12T18:05:00+08:00
+
+MANUAL OVERRIDES:
+- ac: 2 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## ENERGY INEFFICIENCIES
+
+* **AC running while unoccupied:** 6.0% of AC energy was consumed while the room was unoccupied.  (8.6 kWh × 0.06 = 0.516 kWh wasted)
+* **Lights on while unoccupied:** 2.0% of lighting energy was consumed while the room was unoccupied. (1.6 kWh × 0.02 = 0.032 kWh wasted)
+* **AC running while window open:** 2.0% of AC energy was consumed while a window was open. (8.6 kWh × 0.02 = 0.172 kWh wasted)
+* **Excessive device cycling:** While not flagged as "rapid cycling," the relatively high number of AC cycles (9 on/9 off) and light cycles (16 on/16 off) warrants further investigation into potential optimization.  This data alone is insufficient to quantify wasted energy from cycling.
+
+
+## ANOMALIES & SYSTEM ISSUES
+
+* **Sensor malfunction:** The door sensor reported a "battery_low" status at 2025-08-12T18:05:00+08:00.
+* **Unusual runtime patterns:** The average runtime for the AC (88.2 min) is significantly longer than the average runtime for the light (60.5 min) and fan (46.0 min). This difference may indicate an operational issue or user preference.
+* **Statistical outliers in timing data:** The p99 value for door open intervals (7000 seconds or ~1.94 hours) and occupancy intervals (10600 seconds or ~2.94 hours) suggest infrequent but lengthy periods where the door is open or the room is occupied.  These require further investigation to determine whether they represent anomalous behavior or normal variations.
+
+
+## BEHAVIORAL PATTERNS
+
+* **Peak usage times and patterns:** Not available.
+* **Occupancy correlation with device usage:** Occupancy was detected 52.0% of the time, while lights were on 36.0% of the time and the AC was on 48.0% of the time.  These percentages suggest a correlation between occupancy and device usage, but do not establish causality.
+* **Door/window opening patterns:** The door opened 48 times.  The p50, p90, and p99 intervals for door opening duration are 1150 seconds (~19 minutes), 3500 seconds (~58 minutes), and 7000 seconds (~1.94 hours), respectively. Windows were open 6.0% of the time.
+* **Seasonal or weekly deviations:** AC usage deviated 5.1% from the weekly pattern, while light usage deviated 1.5% from the weekly pattern.
+
+
+## CROSS-SENSOR CORRELATIONS
+
+* **Occupancy vs device activation:**  Occupancy (52.0%) shows some correlation with AC usage (48.0%) and light usage (36.0%).
+* **Environmental factors (window/door) vs HVAC usage:**  The AC was on while the window was open for 2.0% of the time.
+* **Manual override patterns:** 2 manual overrides were recorded for the AC.
+
+
+## STATISTICAL INSIGHTS
+
+* **P99 interval outliers:** The p99 values for door open intervals (1.94 hours) and occupancy intervals (2.94 hours) indicate infrequent but lengthy periods.  Investigation is needed to determine if these represent unusual events or expected behavior.
+* **Variance patterns in runtime data:** Not available.
+* **Event frequency analysis:**  The relatively high number of door opens (48) suggests frequent entry and exit from the room.  Light and AC cycles (16 and 9, respectively) are also notable.
+
+
+## ACTIONABLE RECOMMENDATIONS
+
+* **Energy savings opportunities:**  Address the energy waste from AC running while unoccupied (0.516 kWh), lights on while unoccupied (0.032 kWh), and AC running with open windows (0.172 kWh). Implement occupancy-based shutoff for lights and AC.
+* **System optimization:** Investigate the longer-than-average AC runtime (88.2 min) and the relatively high number of AC on/off cycles (9). Explore strategies to optimize AC cycling and possibly reduce its runtime. Investigate the infrequent but lengthy occupancy and door open intervals (p99 values).
+* **Maintenance needs:** Replace the door sensor battery as it's reporting low battery status.
+* **Automation improvements:** Implement rules to automatically turn off the AC when a window is open and to turn off lights and the AC when occupancy is not detected.
+* **User behavior modifications:**  Provide feedback to users regarding the instances of manual AC overrides and the energy waste from running AC when the window is open.  Educate on energy-efficient practices.
+
+
+====================================================================================================
+End of Report
+====================================================================================================

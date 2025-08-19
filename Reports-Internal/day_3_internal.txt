@@ -1,0 +1,122 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-19 19:51:20
+Source file: day_3.json
+Report type: internal
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-13T00:00:00+08:00 to 2025-08-13T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 35.0%
+- AC on: 52.0%
+- Fan on: 25.0%
+- Occupancy detected: 48.0%
+- Window open: 8.0%
+- Door open: 3.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 8.0%
+- Light on while unoccupied: 3.0%
+- AC on while window open: 3.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.5 kWh
+- AC: 9.4 kWh
+- Fan: 0.8 kWh
+- Total: 11.8 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 15 on/15 off
+- AC cycles: 11 on/11 off
+- Fan cycles: 12 on/12 off
+- Door events: 52 opens
+- Occupancy events: 19 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 59.8 min
+- AC avg runtime: 85.1 min
+- Fan avg runtime: 48.2 min
+- Occupancy avg duration: 74.5 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1240.2W
+- AC power drift detected: False
+- Light power average: 60.1W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 9.2% deviation
+- Light vs weekly pattern: 1.0% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1100/3400/6800 seconds
+- Occupancy intervals: 1700/5200/10400 seconds
+
+SENSOR HEALTH:
+- window sensor: battery_low at 2025-08-13T09:15:00+08:00
+
+MANUAL OVERRIDES:
+- ac: 3 overrides
+- fan: 1 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## ENERGY INEFFICIENCIES
+
+* **AC running while unoccupied:** 8.0% of AC energy consumption occurred while the room was unoccupied.  Wasted energy: 9.4 kWh × 0.08 = 0.752 kWh
+* **Lights on while unoccupied:** 3.0% of light energy consumption occurred while the room was unoccupied. Wasted energy: 1.5 kWh × 0.03 = 0.045 kWh
+* **AC on while window open:** 3.0% of AC energy consumption occurred while a window was open. Wasted energy: 9.4 kWh × 0.03 = 0.282 kWh
+
+
+## ANOMALIES & SYSTEM ISSUES
+
+* **Sensor Malfunctions:** The window sensor reported a low battery at 2025-08-13T09:15:00+08:00.  No other sensor malfunctions were flagged.
+* **Rapid Cycling:** No rapid cycling of devices was detected (AC rapid cycling: False).
+* **Power Drift:** No power drift was detected for either the AC or lights (AC power drift detected: False, Light power drift detected: False).
+* **Unusual Runtime Patterns:** The average runtime of the AC (85.1 min) is significantly longer than the light (59.8 min) and fan (48.2 min).  Further investigation into this difference may be warranted.
+* **Statistical Outliers:**  The p99 value for door open intervals (6800 seconds or 1 hour and 53 minutes) and occupancy intervals (10400 seconds or 2 hours and 53 minutes) suggest infrequent but lengthy periods of door and occupancy events.
+
+## BEHAVIORAL PATTERNS
+
+* **Peak Usage Times and Patterns:** Not available.
+* **Occupancy Correlation with Device Usage:** Occupancy detected was 48.0%, while lights were on 35.0% and the AC was on 52.0%.  There is a correlation, but no causality can be inferred.
+* **Door/Window Opening Patterns:** The door was opened 52 times.  The p50/p90/p99 intervals for door openings suggest relatively short intervals (1100/3400/6800 seconds). Windows were open 8.0% of the time.
+* **Seasonal or Weekly Deviations:** AC showed a 9.2% deviation from the weekly pattern, while lights showed a 1.0% deviation.
+
+
+## CROSS-SENSOR CORRELATIONS
+
+* **Occupancy vs. Device Activation:**  As noted above, there's a correlation between occupancy and device usage, but no direct causal relationship can be determined.
+* **Environmental Factors vs. HVAC Usage:** 3.0% of AC usage occurred while a window was open.
+* **Manual Override Patterns:** 3 AC overrides and 1 fan override were recorded.
+
+## STATISTICAL INSIGHTS
+
+* **P99 Interval Outliers:**  The p99 values for door open (1 hour and 53 minutes) and occupancy intervals (2 hours and 53 minutes) indicate infrequent but extended periods of either the door being open or the room being occupied.  This requires further investigation to determine the cause.
+* **Variance Patterns in Runtime Data:** Not available.
+* **Event Frequency Analysis:**  High door event frequency (52 opens) suggests frequent entry and exit.  The relatively high number of AC cycles (11 on/off) compared to the fan (12) and light (15) cycles is noteworthy and requires investigation.
+
+## ACTIONABLE RECOMMENDATIONS
+
+* **Energy Savings Opportunities:** Address the energy waste from AC running unoccupied (0.752 kWh), lights on unoccupied (0.045 kWh), and AC running with open windows (0.282 kWh).  Implementing occupancy-based shutoffs for lights and AC could significantly reduce these losses.
+* **System Optimization:** Investigate the prolonged average runtime of the AC (85.1 min) compared to other devices.  Analyze the infrequent but extended occupancy and door open intervals (p99 values) to identify potential causes. Examine the higher-than-expected AC cycle count.
+* **Maintenance Needs:** Replace the window sensor battery (battery_low at 2025-08-13T09:15:00+08:00).
+* **Automation Improvements:** Implement occupancy sensors to automatically switch off lights and AC when the room is unoccupied.  Add a rule to disable the AC when a window is open.
+* **User Behavior Modifications:** Provide feedback on the frequency of manual overrides for AC and fan.  Training on energy-efficient practices could reduce unnecessary usage.
+
+
+====================================================================================================
+End of Report
+====================================================================================================

@@ -1,0 +1,70 @@
+## 1. 📊 WAS THE DATA USED CORRECTLY?
+
+* Occupancy, light, AC, fan, window, and door usage percentages match the sensor data. ✔️
+* Device on/off counts (lights 16/16, AC 9/9, fan 11/11, doors 48 opens) match the raw counts. ✔️
+* Energy consumption numbers (light 1.6 kWh, AC 8.6 kWh, fan 0.75 kWh) are consistent with the data. ✔️
+* AC on while unoccupied (6%), light on while unoccupied (2%), and AC on with window open (2%) match the data. ✔️
+* The low battery event for the door sensor is correctly noted. ✔️
+
+**Verdict:** All reported values are consistent with the data.
+
+---
+
+## 2. ✏️ WERE CALCULATIONS AND SAVINGS ESTIMATES RIGHT?
+
+* The report estimated AED 200 annual savings from automating AC shutoff when unoccupied. This seems exaggerated relative to a single day of 6% unnecessary runtime. **Not verifiable from data.**
+* Savings for AC running with windows open (\~AED 30) are also an estimate not backed by detailed calculation. **Not verifiable from data.**
+
+**Verdict:** Estimates are presented plausibly but rely on unsupported assumptions.
+
+---
+
+## 3. ⚠️ WERE PROBLEMS IDENTIFIED ACCURATELY?
+
+* Correctly flagged AC and lights running while unoccupied (6% and 2%). ✔️
+* Correctly flagged AC running with open windows (2%). ✔️
+* Correctly noted door sensor low battery. ✔️
+* No false problems were added. ✔️
+
+**Verdict:** All system issues were accurately described.
+
+---
+
+## 4. 🤔 DID IT MAKE ASSUMPTIONS OR GUESS BEHAVIOR?
+
+* Statements about comfort levels (“comfort level is likely good”) are **not verifiable from the data**.
+* Claims about energy efficiency or room usage patterns over time (e.g., “some disconnect between occupancy and AC/lighting usage”) are plausible but assume behavior beyond raw counts. **Minor assumptions present.**
+
+**Verdict:** Some small assumptions were made, but most insights are data-driven.
+
+---
+
+## 5. 💡 ARE THE RECOMMENDATIONS HELPFUL AND FAIR?
+
+* Automating AC shutdown and linking it to the window sensor are practical, data-backed recommendations. ✔️
+* Replacing the low battery sensor is accurate and actionable. ✔️
+* Suggestions to review AC patterns and remind occupants are reasonable and not blaming anyone unfairly. ✔️
+
+**Verdict:** Recommendations are useful, fair, and actionable.
+
+---
+
+## 6. ✅ FINAL VERDICT: CAN WE TRUST THIS REPORT?
+
+* The report accurately reflects sensor data and identifies real issues.
+* Annual savings estimates are exaggerated and not fully supported.
+* Comfort-related statements are assumptions.
+
+**Overall accuracy:** \~90% correct
+
+**Critical issues:**
+
+* Estimated annual savings (AED 200) is not verifiable and may be overstated.
+* Comfort statements are assumptions without temperature or user feedback.
+
+**Small improvements:**
+
+* Clarify that savings numbers are rough estimates.
+* Avoid implying comfort levels without supporting data.
+
+**Conditionally usable:** Contains useful insights but has minor inaccuracies.

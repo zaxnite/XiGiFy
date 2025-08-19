@@ -1,0 +1,88 @@
+## 1. DATA EXTRACTION ACCURACY
+
+* **Timestamps:** Correct (`2025-08-14T00:00:00+08:00` to `2025-08-14T23:59:59+08:00`). ✅
+* **Usage Patterns:** Matches JSON:
+
+  * Light: 34% ✅
+  * AC: 57% ✅
+  * Fan: 30% ✅
+  * Occupancy: 49% ✅
+  * Window open: 9% ✅
+  * Door open: 3% ✅
+* **Efficiency Metrics / Cross-Sensor Ratios:** Correct. ✅
+* **Energy Consumption:** Matches JSON:
+
+  * Light: 1.4 kWh ✅
+  * AC: 10.2 kWh ✅
+  * Fan: 0.9 kWh ✅
+  * Total: 12.5 kWh ✅ (sum rounded correctly)
+* **Device Activity:** Matches JSON:
+
+  * Light: 14/14 ✅
+  * AC: 14/14 ✅
+  * Fan: 15/15 ✅
+  * Door events: 55 opens ✅
+  * Occupancy events: 20 detections ✅
+  * Window events: Reported 9% open vs JSON counts 8/8; minor rounding discrepancy ⚠️
+* **Run Length Statistics:** Average runtimes match JSON; variance not reported in the main report but present in JSON. ⚠️
+* **Power Drift / Anomalies:** Correctly reports AC drift True, Light drift False. ✅
+* **Seasonal Patterns / Intervals:** Correct. ✅
+* **Sensor Health:** Correctly flags occupancy sensor signal degradation. ✅
+* **Manual Overrides:** AC: 4, Fan: 2 ✅
+
+**Summary:** Data extraction is accurate (\~95–97%). Minor issues: window event count vs %. Variance values omitted in the report.
+
+---
+
+## 2. CALCULATION VALIDITY
+
+* **Wasted energy calculations:**
+
+  * AC unoccupied: 10.2 × 0.11 = 1.122 kWh ✅
+  * Lights unoccupied: 1.4 × 0.04 = 0.056 kWh ✅
+  * AC while window open: 10.2 × 0.05 = 0.51 kWh ✅
+* All calculations verified correct. ✅
+
+---
+
+## 3. SENSOR HEALTH & ANOMALY HANDLING
+
+* **Sensor health:** Occupancy signal degradation correctly reported. ✅
+* **Power drift:** Correctly flagged for AC. ✅
+* **Other anomaly flags:** AC rapid cycling, light stuck, occupancy stuck all correctly False. ✅
+
+---
+
+## 4. LOGICAL CONSISTENCY & HALLUCINATIONS
+
+* **Runtime and cycle interpretations:** AC runtime longer than light/fan flagged for investigation; reasonable inference. ✅
+* **Event interval interpretations:** P99 values interpreted as potential outliers; logical. ✅
+* **Other behavioral analyses:** Consistent with JSON. ✅
+
+---
+
+## 5. ANALYTICAL SOUNDNESS
+
+* **Energy inefficiency insights:** Accurate and actionable. ✅
+* **Behavioral / correlation insights:** Correct; correlation noted without implying causation. ✅
+* **Recommendations:** Align with data:
+
+  * Energy savings (AC unoccupied, AC with windows, lights unoccupied)
+  * System optimization (AC runtime, cycle count, power drift)
+  * Maintenance (occupancy sensor)
+  * Automation improvements
+  * User behavior feedback
+
+---
+
+## 6. FINAL VERDICT
+
+* **Overall accuracy:** \~95–97%
+* **Reliability:** Report is reliable; minor rounding issues and omission of variance should be addressed for completeness.
+* **Critical errors:** None.
+* **Minor improvements:**
+
+  * Include variance for run length statistics.
+  * Clarify % vs raw counts for window events (8 counts = 9%).
+
+**Conclusion:** The Day 4 report is largely accurate, clear, and actionable. Minor numerical refinements recommended for precision and completeness.

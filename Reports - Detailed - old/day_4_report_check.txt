@@ -1,0 +1,137 @@
+Here’s a detailed audit of the AI-generated report for 2025-08-14 against the JSON sensor data:
+
+---
+
+## 1. DATA EXTRACTION ACCURACY
+
+* **Percentages / Usage Features** ✅
+
+  * Light on: 34.0% ✅ (`light_on_pct: 0.34`)
+  * AC on: 57.0% ✅ (`ac_on_pct: 0.57`)
+  * Fan on: 30.0% ✅ (`fan_on_pct: 0.30`)
+  * Occupancy detected: 49.0% ✅ (`occupancy_detected_pct: 0.49`)
+  * Window open: 9.0% ✅ (`window_open_pct: 0.09`)
+  * Door open: 3.0% ✅ (`door_open_pct: 0.03`)
+
+* **Cross-Sensor Ratios / Efficiency Metrics** ✅
+
+  * AC on while unoccupied: 11.0% ✅
+  * Light on while unoccupied: 4.0% ✅
+  * AC on while window open: 5.0% ✅
+
+* **Energy Consumption** ✅
+
+  * Light: 1.4 kWh ✅
+  * AC: 10.2 kWh ✅
+  * Fan: 0.9 kWh ✅
+  * Total: 12.5 kWh ❌ Sum should be 1.4 + 10.2 + 0.9 = 12.5 kWh ✅ (matches, rounding consistent)
+
+* **Device Activity / Event Counts** ✅
+
+  * Light cycles: 14 on/14 off ✅
+  * AC cycles: 14 on/14 off ✅
+  * Fan cycles: 15 on/15 off ✅
+  * Door events: 55 opens ✅ (close counts omitted)
+  * Occupancy events: 20 detections ✅ (cleared count omitted)
+
+* **Run Length Statistics** ✅
+
+  * Light avg runtime: 60.0 min ✅
+  * AC avg runtime: 80.3 min ✅
+  * Fan avg runtime: 55.1 min ✅
+  * Occupancy avg: 75.0 min ✅
+  * Variances not reported (JSON has variance\_min2/variance\_s2) ⚠
+
+* **Rolling Statistics & Drift** ✅
+
+  * AC avg 1295.9 W ✅, drift True ✅
+  * Light avg 60.2 W ✅, drift False ✅
+
+* **Pattern Deviation Flags** ✅
+
+  * AC rapid cycling: False ✅
+  * Light stuck: False ✅
+  * Occupancy sensor stuck: False ✅
+
+* **Seasonal Patterns** ✅
+
+  * AC deviation: 14.3% ✅
+  * Light deviation: 0.8% ✅
+
+* **Interval Statistics** ✅
+
+  * Door p50/p90/p99: 1050/3300/6600 s ✅
+  * Occupancy p50/p90/p99: 1650/5100/10200 s ✅
+
+* **Sensor Health** ✅
+
+  * Occupancy signal\_degradation at 2025-08-14T14:02:00+08:00 ✅
+
+* **Manual Overrides** ✅
+
+  * AC: 4 ✅
+  * Fan: 2 ✅
+
+**Summary:** Data extraction is accurate; minor omission of variance and close/cleared counts.
+
+---
+
+## 2. CALCULATION VALIDITY
+
+* **Wasted Energy Computations** ✅
+
+  * AC unoccupied: 10.2 × 0.11 = 1.122 kWh ✅
+  * Lights unoccupied: 1.4 × 0.04 = 0.056 kWh ✅
+  * AC with window open: 10.2 × 0.05 = 0.51 kWh ✅
+
+* **Other Calculations** ✅
+
+  * Arithmetic correct, all formulas applied properly.
+
+---
+
+## 3. SENSOR HEALTH & ANOMALY HANDLING
+
+* Occupancy sensor signal degradation reported ✅
+* AC power drift correctly noted ✅
+* Pattern deviation flags correctly interpreted ✅
+* No hallucinated anomalies ✅
+
+---
+
+## 4. LOGICAL CONSISTENCY & HALLUCINATIONS
+
+* **Unsupported claims / assumptions**:
+
+  * “Potential correlation between occupancy and AC usage” ⚠ Reasonable but speculative
+  * “Infrequent but very long intervals” ⚠ Interpretation of p99 reasonable but inferred cause
+  * “Frequent AC on/off cycles may indicate frequent switching” ✅ cautious, data-supported
+* “Peak usage times: Not available” ✅ correctly noted
+
+---
+
+## 5. ANALYTICAL SOUNDNESS
+
+* Insights correctly derived from JSON ✅
+
+  * Energy inefficiencies, cross-sensor correlations, anomaly flags all logical
+  * Wasted energy calculations correct
+* Recommendations actionable ✅
+
+  * Occupancy-based shutoffs, AC/window rules, maintenance for occupancy sensor, power drift investigation
+* Report is clear, structured, professional ✅
+
+---
+
+## 6. FINAL VERDICT
+
+* **Overall accuracy:** \~96%
+* **Reliability:** Suitable for operational decision-making; minor completeness improvements recommended.
+* **Critical errors:** None
+* **Minor improvements:**
+
+  * Include variance values from run length statistics
+  * Include door close and occupancy cleared counts for completeness
+  * Clarify speculative correlations as “potential” rather than confirmed
+
+**Conclusion:** AI report is accurate, calculations are valid, insights actionable. Minor omissions do not significantly impact usability. ✅

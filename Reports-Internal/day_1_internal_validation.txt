@@ -1,0 +1,90 @@
+## 1. DATA EXTRACTION ACCURACY
+
+* **Timestamps:** Correctly reported (`2025-08-11T00:00:00+08:00` to `2025-08-11T23:59:59+08:00`). ✅
+* **Usage Patterns:** All percentages match JSON:
+
+  * Light: 35% ✅
+  * AC: 45% ✅
+  * Fan: 20% ✅
+  * Occupancy: 50% ✅
+  * Window open: 5% ✅
+  * Door open: 2% ✅
+* **Cross-Sensor Ratios / Efficiency Metrics:** Matches JSON values. ✅
+* **Energy Consumption:** Matches JSON kWh values:
+
+  * Light: 1.5
+  * AC: 8.1
+  * Fan: 0.7
+  * Total: 10.3 kWh (correctly summed). ✅
+* **Device Activity / Event Counts:** Matches JSON counts, except:
+
+  * Door events only list "45 opens" without noting 45 closes, minor omission. ⚠️
+  * Occupancy events correctly show 20 detections (JSON also has 20 cleared). ✅
+* **Run Length Statistics:** Correctly extracted average runtimes; variance values omitted in report (JSON provides variance). ⚠️
+* **Power Drift / Anomalies:** Correctly reported from JSON. ✅
+* **Seasonal Patterns:** Correctly reported. ✅
+* **Inter-event Intervals:** Correctly reported p50/p90/p99 values. ✅
+* **Manual Overrides:** AC override count correctly reported. ✅
+
+**Summary:** Data extraction is mostly accurate (\~95%). Minor omissions: door close counts, variance statistics for runtimes.
+
+---
+
+## 2. CALCULATION VALIDITY
+
+* **Wasted energy computations:**
+
+  * AC while unoccupied: 8.1 × 0.05 = 0.405 kWh ✅
+  * Light while unoccupied: 1.5 × 0.02 = 0.03 kWh ✅
+  * AC while window open: 8.1 × 0.01 = 0.081 kWh ✅
+* **Total reported wasted energy:** 0.435 kWh (sum of 0.405 + 0.03) correctly stated. ✅
+* **Other calculations:** No additional computations were claimed, all formulas correct.
+
+---
+
+## 3. SENSOR HEALTH & ANOMALY HANDLING
+
+* **Sensor health events:** JSON shows `sensor_health_events: []` → report correctly states "No sensor health issues detected." ✅
+* **Anomaly flags:** All correctly reported from JSON:
+
+  * AC rapid cycling: False
+  * Light stuck: False
+  * Occupancy sensor stuck: False
+  * AC/light power drift: False
+* **No hallucinated issues** detected. ✅
+
+---
+
+## 4. LOGICAL CONSISTENCY & HALLUCINATIONS
+
+* **Unsupported claims:**
+
+  * "Peak usage times: Not available" → correct, JSON lacks timestamps. ✅
+  * "High number of door events might lead to unnecessary AC/light switching" → speculative, not directly derivable from data. ⚠️
+  * "Average AC runtime significantly longer than light/fan indicating optimization potential" → reasonable but interpretive.
+* **All other behavioral analyses** are properly qualified and derived from the JSON.
+
+---
+
+## 5. ANALYTICAL SOUNDNESS
+
+* **Energy inefficiency insights:** Mathematically and logically consistent. ✅
+* **Behavioral patterns / correlations:** Mostly reasonable, supported by percentages, though some assumptions are inferential. ⚠️
+* **Recommendations:** Clear, actionable, and aligned with reported data. ✅
+* **Clarity & structure:** Excellent; professional, organized into sections, easy to follow. ✅
+
+---
+
+## 6. FINAL VERDICT
+
+* **Overall accuracy:** \~95–97% correct.
+* **Reliability for operational use:** Reliable for high-level monitoring and energy insights; minor gaps noted.
+* **Critical errors:** None that would mislead operations.
+* **Minor improvements:**
+
+  * Include variance statistics in run length section.
+  * Report door close events alongside opens for completeness.
+  * Clearly indicate which insights are inferential versus data-derived.
+
+**Conclusion:** The report is accurate, mostly complete, and provides actionable recommendations. Minor omissions do not materially affect usability.
+

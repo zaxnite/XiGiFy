@@ -1,0 +1,126 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-19 19:45:29
+Source file: day_1.json
+Report type: internal
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-11T00:00:00+08:00 to 2025-08-11T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 35.0%
+- AC on: 45.0%
+- Fan on: 20.0%
+- Occupancy detected: 50.0%
+- Window open: 5.0%
+- Door open: 2.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 5.0%
+- Light on while unoccupied: 2.0%
+- AC on while window open: 1.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.5 kWh
+- AC: 8.1 kWh
+- Fan: 0.7 kWh
+- Total: 10.3 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 15 on/15 off
+- AC cycles: 8 on/8 off
+- Fan cycles: 10 on/10 off
+- Door events: 45 opens
+- Occupancy events: 20 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 60.1 min
+- AC avg runtime: 90.5 min
+- Fan avg runtime: 45.0 min
+- Occupancy avg duration: 75.2 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1200.5W
+- AC power drift detected: False
+- Light power average: 60.2W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 2.5% deviation
+- Light vs weekly pattern: 1.1% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1200/3600/7200 seconds
+- Occupancy intervals: 1800/5400/10800 seconds
+
+SENSOR HEALTH:
+- No sensor health issues detected
+
+MANUAL OVERRIDES:
+- ac: 1 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## ENERGY INEFFICIENCIES
+
+* **Devices running unoccupied:**
+    * AC on while unoccupied: 8.1 kWh × 0.05 = 0.405 kWh wasted energy.
+    * Lights on while unoccupied: 1.5 kWh × 0.02 = 0.03 kWh wasted energy.
+* **HVAC conflicting with environment:** AC on while window open: 8.1 kWh × 0.01 = 0.081 kWh wasted energy.
+* **Excessive device cycling:**  The data does not directly indicate excessive cycling, although the high number of door events (45 opens) might suggest frequent short-duration entries/exits, potentially leading to unnecessary AC and light switching. Further investigation may be needed, however.
+* **Power consumption anomalies:** No power drift was detected for either the AC or lights (AC power drift detected: False, Light power drift detected: False).
+
+
+## ANOMALIES & SYSTEM ISSUES
+
+* **Sensor malfunctions:** No sensor health issues or stuck readings were detected (No sensor health issues detected; Occupancy sensor stuck: False; Light stuck: False).
+* **Rapid cycling:** No rapid cycling detected for AC or lights (AC rapid cycling: False).
+* **Power drift:** No power drift detected for AC or lights (AC power drift detected: False, Light power drift detected: False).
+* **Unusual runtime patterns:** The average runtime of the AC (90.5 min) is significantly longer than the light (60.1 min) and fan (45.0 min). This might indicate a potential area for optimization.
+* **Statistical outliers:** The p99 value for door open intervals is 7200 seconds (2 hours), and for occupancy intervals is 10800 seconds (3 hours).  These relatively long intervals warrant further investigation.
+
+## BEHAVIORAL PATTERNS
+
+* **Peak usage times:** Not available.
+* **Occupancy correlation with device usage:** Occupancy detected: 50.0%; Light on: 35.0%; AC on: 45.0%.  There is a correlation between occupancy and light usage but  AC usage is higher than occupancy, suggesting potential for improvement.
+* **Door/window opening patterns:** Door open count: 45; Window open: 5.0%. Door open intervals (p50/p90/p99): 1200/3600/7200 seconds.  The p99 value (2 hours) indicates occasional long periods with the door open.
+* **Seasonal deviations:** AC vs. weekly pattern: 2.5% deviation; Light vs. weekly pattern: 1.1% deviation.
+
+
+## CROSS-SENSOR CORRELATIONS
+
+* **Occupancy vs. device activation:**  Occupancy detected (50%) correlates somewhat with light usage (35%), but less so with AC usage (45%).
+* **Environmental factors vs. HVAC:** Window open (5.0%); AC on while window open (1.0%).  A small percentage of AC usage coincides with open windows.
+* **Manual overrides:** ac: 1 override.
+
+
+## STATISTICAL INSIGHTS
+
+* **P99 interval outliers:** Door open intervals (p99 = 2 hours) and occupancy intervals (p99 = 3 hours) suggest occasional lengthy periods where the door is open or the room is occupied.
+* **Variance patterns in runtime data:** Not available.
+* **Event frequency analysis:** High door event frequency (45 opens) suggests frequent entries and exits.  Light cycles (15 on/off), AC cycles (8 on/off), and fan cycles (10 on/off) provide information on device usage frequency.
+
+
+## ACTIONABLE RECOMMENDATIONS
+
+* **Energy savings opportunities:** Implement occupancy-based shutoff for lights and AC to reduce the 0.435 kWh wasted energy from lights and AC running while unoccupied. Address the 0.081 kWh wasted energy from AC running with open windows.
+* **System optimization:** Investigate the reasons for the lengthy p99 intervals for door openings (2 hours) and occupancy (3 hours).  Analyze if the high number of door events (45) contributes to unnecessary AC cycling. Review the longer average AC runtime (90.5 min) compared to lights (60.1 min) and fan (45 min) for potential optimization.
+* **Maintenance needs:** No maintenance needs identified based on the provided data (No sensor health issues detected).
+* **Automation improvements:** Implement occupancy sensors to automatically turn off lights and AC when the room is unoccupied. Implement a rule to disable the AC when a window is open.
+* **User behavior modifications:**  Feedback or training might be useful to reduce the frequency of manual AC overrides (1 override).  Encourage closing doors promptly to minimize energy waste associated with frequent cycling.
+
+
+====================================================================================================
+End of Report
+====================================================================================================

@@ -1,0 +1,68 @@
+## 1. 📊 Data Consistency Check
+
+* **Usage percentages:** Light (34%), AC (57%), Fan (30%), Occupancy (49%), Window (9%), Door (3%) match the JSON. ✔️
+* **Device cycles:** Light 14/14, AC 14/14, Fan 15/15, Door 55 opens, Occupancy 20 detections match raw counts. ✔️
+* **Energy consumption:** Light 1.4 kWh, AC 10.2 kWh, Fan 0.9 kWh correctly reflect the data. ✔️
+* **Cross-sensor ratios:** AC on while unoccupied 11%, Light on while unoccupied 4%, AC on while window open 5% match JSON. ✔️
+* **Sensor events:** Occupancy sensor signal degradation at 14:02 and manual overrides (AC 4, Fan 2) are correctly noted. ✔️
+* **Power drift:** AC drift detected (true), Light drift (false) matches the JSON. ✔️
+
+**Verdict:** Reported values are fully consistent with the raw data.
+
+---
+
+## 2. ✏️ Calculation & Savings Estimates
+
+* Report estimates AED 200 annual savings from AC automation. This is **an extrapolation from the 11% daily unoccupied AC runtime**, reasonable but not directly verifiable.
+* Monthly cost impact from AC running with windows open (AED 5–10) and lights on unoccupied (minimal) is logically consistent with reported energy usage.
+
+**Verdict:** Estimates are plausible, but the exact annual savings figure is based on assumptions.
+
+---
+
+## 3. ⚠️ System Issues Identification
+
+* Correctly flagged:
+
+  * AC running while unoccupied (11%) ✔️
+  * Lights on while unoccupied (4%) ✔️
+  * AC running with windows open (5%) ✔️
+  * Occupancy sensor degradation at 14:02 ✔️
+  * AC power drift ✔️
+
+**Verdict:** All relevant issues were accurately reported.
+
+---
+
+## 4. 🤔 Assumptions & Interpretations
+
+* Comfort level (“not directly measurable”) is acknowledged as an assumption—good practice. ✔️
+* Energy waste calculations are mostly data-driven, with minor assumptions on cost conversion (AED/month).
+* AC/window coordination inefficiency inferred from cross-sensor ratio (5%) is reasonable. ✔️
+
+**Verdict:** Minimal assumptions; largely data-based conclusions.
+
+---
+
+## 5. 💡 Recommendations
+
+* **Automate AC shutoff:** Correctly suggested to reduce wasted energy. ✔️
+* **Integrate window sensors:** Accurate recommendation. ✔️
+* **Inspect/replace occupancy sensor:** Matches the degradation event. ✔️
+* **Investigate AC power drift:** Correct recommendation based on drift flag. ✔️
+* **Review manual overrides:** Helpful for optimizing automation and energy efficiency. ✔️
+
+**Verdict:** Recommendations are actionable, relevant, and supported by the data.
+
+---
+
+## 6. ✅ Overall Assessment
+
+* **Accuracy:** \~95% correct (data values, issues, recommendations).
+* **Minor Caveats:**
+
+  * Savings extrapolation (AED 200) is an estimate.
+  * Monthly cost conversions assume linear scaling from daily percentages.
+
+**Conclusion:** The report is reliable, data-driven, and provides useful actionable steps with minor extrapolation-based assumptions.
+

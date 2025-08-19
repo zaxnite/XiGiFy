@@ -1,0 +1,128 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-18 17:20:36
+Source file: day_3.json
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-13T00:00:00+08:00 to 2025-08-13T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 35.0%
+- AC on: 52.0%  
+- Fan on: 25.0%
+- Occupancy detected: 48.0%
+- Window open: 8.0%
+- Door open: 3.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 8.0%
+- Light on while unoccupied: 3.0%
+- AC on while window open: 3.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.5 kWh
+- AC: 9.4 kWh
+- Fan: 0.8 kWh
+- Total: 11.8 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 15 on/15 off
+- AC cycles: 11 on/11 off
+- Fan cycles: 12 on/12 off
+- Door events: 52 opens
+- Occupancy events: 19 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 59.8 min
+- AC avg runtime: 85.1 min  
+- Fan avg runtime: 48.2 min
+- Occupancy avg duration: 74.5 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1240.2W
+- AC power drift detected: False
+- Light power average: 60.1W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 9.2% deviation
+- Light vs weekly pattern: 1.0% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1100/3400/6800 seconds
+- Occupancy intervals: 1700/5200/10400 seconds
+
+SENSOR HEALTH:
+- window sensor: battery_low at 2025-08-13T09:15:00+08:00
+
+MANUAL OVERRIDES:
+- ac: 3 overrides
+- fan: 1 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## ENERGY INEFFICIENCIES
+
+* **Devices running when the room is unoccupied:**
+    * AC energy wasted: 9.4 kWh × 0.08 = 0.752 kWh ("AC on while unoccupied: 8.0%")
+    * Light energy wasted: 1.5 kWh × 0.03 = 0.045 kWh ("Light on while unoccupied: 3.0%")
+* **HVAC operation conflicting with environmental conditions:**
+    * AC energy wasted: 9.4 kWh × 0.03 = 0.282 kWh ("AC on while window open: 3.0%")
+* **Excessive device cycling:**  The provided data does not directly indicate excessive cycling, only the number of cycles.  Further analysis (e.g., cycle duration vs. average runtime) would be needed to determine excessiveness.
+* **Power consumption anomalies:** No power drift was detected ("AC power drift detected: False", "Light power drift detected: False").
+
+
+## ANOMALIES & SYSTEM ISSUES
+
+* **Sensor malfunctions or stuck readings:** The window sensor reported a low battery at 2025-08-13T09:15:00+08:00 ("sensor_health_events"). No other sensor malfunctions were flagged.
+* **Rapid cycling of devices:** No rapid cycling was detected ("AC rapid cycling: False", "Light stuck: False").
+* **Power drift issues:** No power drift was detected ("AC power drift detected: False", "Light power drift detected: False").
+* **Unusual runtime patterns:** The average runtime of the AC (85.1 min) is significantly longer than the light (59.8 min) and fan (48.2 min). ("run_length_statistics")
+* **Statistical outliers in timing data:** The p99 door open interval is 6800 seconds (1 hour and 53 minutes), and the p99 occupancy interval is 10400 seconds (2 hours and 53 minutes). ("inter_event_distributions")
+
+
+## BEHAVIORAL PATTERNS
+
+* **Peak usage times and patterns:** Not available.
+* **Occupancy correlation with device usage:** Occupancy was detected 48% of the time ("occupancy_detected_pct"), while the AC was on 52% of the time ("ac_on_pct"), and lights were on 35% of the time ("light_on_pct").
+* **Door/window opening patterns:** The door opened 52 times ("door_events"), and the window was open 8% of the time ("window_open_pct").  Door opening intervals ranged from 1100 seconds (p50) to 6800 seconds (p99).  This suggests infrequent but sometimes lengthy openings.
+* **Seasonal or weekly deviations:** AC usage deviated by 9.2% from the weekly pattern, and light usage deviated by 1.0% ("seasonal_pattern_summaries").
+
+
+## CROSS-SENSOR CORRELATIONS
+
+* **Occupancy vs device activation:**  AC was on 52% of the time, while occupancy was detected 48% of the time. Lights were on 35% of the time.
+* **Environmental factors (window/door) vs HVAC usage:** The AC was on while the window was open 3% of the time ("ac_on_while_window_open_pct").
+* **Manual override patterns:** 3 AC overrides and 1 fan override were recorded ("manual_override_counters").
+
+
+## STATISTICAL INSIGHTS
+
+* **P99 interval outliers and their implications:** The p99 door open interval (1 hour and 53 minutes) and the p99 occupancy interval (2 hours and 53 minutes) suggest occasional extended periods of door being open or room occupancy.  This could indicate prolonged meetings or other events.
+* **Variance patterns in runtime data:** Not available.
+* **Event frequency analysis:** The high number of door events (52) suggests frequent entry and exit.
+
+
+## ACTIONABLE RECOMMENDATIONS
+
+* **Energy savings opportunities:** Implement occupancy-based shutoff for AC and lights to reduce the 0.752 kWh and 0.045 kWh wasted energy respectively, due to unoccupied operation.  Address the 0.282 kWh of wasted energy by implementing a rule to turn off the AC when a window is open.
+* **System optimization:** Investigate the significantly longer average AC runtime (85.1 min) compared to the light (59.8 min) and fan (48.2 min) for potential inefficiencies. Analyze the infrequent, but long, door and occupancy intervals (p99 values) to identify potential causes for these outliers.
+* **Maintenance needs:** Replace the window sensor battery ("sensor_health_events").
+* **Automation improvements:** Implement occupancy-based shutoff for AC and lights. Implement a rule to disable the AC when a window is open.
+* **User behavior modifications:**  Educate users on the importance of turning off lights and AC when leaving the room to reduce energy waste.  Review the reasons for the manual overrides to identify potential automation improvements.
+
+
+====================================================================================================
+End of Report
+====================================================================================================

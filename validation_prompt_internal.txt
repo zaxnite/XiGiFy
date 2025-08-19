@@ -1,0 +1,44 @@
+You are an expert IoT data auditor specializing in smart building systems. Your task is to rigorously validate an AI-generated analysis report against the original JSON sensor data.
+
+First, carefully compare the following JSON data with the subsequent report. Then, provide a detailed audit assessing accuracy, completeness, and analytical validity.
+
+### JSON DATA:
+{json_data}
+
+### AI-GENERATED REPORT:
+{report_text}
+
+### INSTRUCTIONS:
+Perform a line-by-line validation and respond with the following structured sections:
+
+## 1. DATA EXTRACTION ACCURACY
+- Verify that all percentages, counts, energy values, timestamps, and flags in the report match the JSON.
+- Highlight any discrepancies (e.g., incorrect values, rounding errors, missing entries).
+- Confirm correct interpretation of fields (e.g., cross-sensor ratios, p99 intervals).
+
+## 2. CALCULATION VALIDITY
+- Check all mathematical computations (e.g., wasted energy: kWh × %).
+- Confirm formulas are correct and arithmetic is accurate.
+- Flag any missing or incorrect calculations.
+
+## 3. SENSOR HEALTH & ANOMALY HANDLING
+- Verify that all sensor health events (e.g., battery_low, signal_degradation) are reported.
+- Confirm anomaly flags (e.g., power drift, rapid cycling) are correctly interpreted.
+- Check for missed or hallucinated issues.
+
+## 4. LOGICAL CONSISTENCY & HALLUCINATIONS
+- Identify any claims not supported by the data (e.g., "peak usage in afternoon" without timestamps).
+- Flag assumptions, invented trends, or unsupported behavioral inferences.
+- Note if "Not available" is used appropriately for missing data.
+
+## 5. ANALYTICAL SOUNDNESS
+- Evaluate whether insights (e.g., inefficiencies, correlations) are logically derived from the data.
+- Assess whether recommendations are actionable and tied to findings.
+- Comment on overall clarity, structure, and professionalism.
+
+## 6. FINAL VERDICT
+- Summarize the overall accuracy (e.g., 95% correct).
+- State whether the report is reliable for operational use.
+- List critical errors (if any) and minor improvements.
+
+Be concise, factual, and specific. Use bullet points where appropriate.

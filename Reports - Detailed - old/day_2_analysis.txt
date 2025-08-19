@@ -1,0 +1,116 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-18 17:18:20
+Source file: day_2.json
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-12T00:00:00+08:00 to 2025-08-12T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 36.0%
+- AC on: 48.0%  
+- Fan on: 21.0%
+- Occupancy detected: 52.0%
+- Window open: 6.0%
+- Door open: 2.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 6.0%
+- Light on while unoccupied: 2.0%
+- AC on while window open: 2.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.6 kWh
+- AC: 8.6 kWh
+- Fan: 0.8 kWh
+- Total: 10.9 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 16 on/16 off
+- AC cycles: 9 on/9 off
+- Fan cycles: 11 on/11 off
+- Door events: 48 opens
+- Occupancy events: 22 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 60.5 min
+- AC avg runtime: 88.2 min  
+- Fan avg runtime: 46.0 min
+- Occupancy avg duration: 76.8 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1215.7W
+- AC power drift detected: False
+- Light power average: 60.3W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 5.1% deviation
+- Light vs weekly pattern: 1.5% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1150/3500/7000 seconds
+- Occupancy intervals: 1750/5300/10600 seconds
+
+SENSOR HEALTH:
+- door sensor: battery_low at 2025-08-12T18:05:00+08:00
+
+MANUAL OVERRIDES:
+- ac: 2 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## ENERGY INEFFICIENCIES
+
+* **AC running while unoccupied:** 6.0% of the AC energy consumption occurred while the room was unoccupied.  Wasted energy: 8.6 kWh × 0.06 = 0.516 kWh
+* **Lights on while unoccupied:** 2.0% of the light energy consumption occurred while the room was unoccupied. Wasted energy: 1.6 kWh × 0.02 = 0.032 kWh
+* **AC on while window open:** 2.0% of the AC energy consumption occurred while a window was open. Wasted energy: 8.6 kWh × 0.02 = 0.172 kWh
+
+## ANOMALIES & SYSTEM ISSUES
+
+* **Sensor Malfunction:** The door sensor reported a low battery at 2025-08-12T18:05:00+08:00.
+* **Unusual Runtime Patterns:** The AC had an average runtime of 88.2 minutes, significantly longer than the light (60.5 minutes) and fan (46.0 minutes).  This warrants further investigation.
+* **Statistical Outliers in Timing Data:** The p99 value for door open intervals is 7000 seconds (approximately 1.94 hours), indicating potentially very long periods where the door remained open. Similarly, the p99 value for occupancy intervals is 10600 seconds (approximately 2.94 hours), suggesting unusually long periods of continuous occupancy.
+
+## BEHAVIORAL PATTERNS
+
+* **Peak usage times and patterns:** Not available
+* **Occupancy correlation with device usage:** Occupancy was detected 52.0% of the time (occupancy_detected_pct), while lights were on 36.0% (light_on_pct) and the AC was on 48.0% (ac_on_pct).  No direct causal relationship can be inferred.
+* **Door/window opening patterns:** The door opened 48 times (door_events).  The p50, p90, and p99 intervals for door openings were 1150, 3500, and 7000 seconds respectively.  Windows were open 6.0% of the time (window_open_pct).
+* **Seasonal or weekly deviations:** AC usage deviated 5.1% from the weekly pattern, while light usage deviated 1.5%.
+
+## CROSS-SENSOR CORRELATIONS
+
+* **Occupancy vs device activation:**  The percentage of time the AC was on (48.0%) is higher than the occupancy percentage (52.0%), suggesting potential for optimization.  The percentage of time lights were on (36.0%) is lower than occupancy, which may also be worth investigation.
+* **Environmental factors (window/door) vs HVAC usage:**  The AC was on while the window was open 2.0% of the time (ac_on_while_window_open_pct).
+* **Manual override patterns:** 2 manual overrides of the AC were recorded (manual_overrides).
+
+## STATISTICAL INSIGHTS
+
+* **P99 interval outliers and their implications:** The p99 interval for door openings (7000 seconds or ~1.94 hours) and occupancy (10600 seconds or ~2.94 hours) suggests there were instances of exceptionally long periods of continuous door opening or occupancy.  This might indicate potential issues such as a malfunctioning door sensor or prolonged periods of inactivity.
+* **Variance patterns in runtime data:** Not available.
+* **Event frequency analysis:**  The light cycled 16 times on/off, the AC 9 times, and the fan 11 times. The door opened 48 times, and occupancy was detected 22 times.
+
+## ACTIONABLE RECOMMENDATIONS
+
+* **Energy savings opportunities:**  Address the wasted energy from the AC running unoccupied (0.516 kWh), lights on unoccupied (0.032 kWh), and the AC running with open windows (0.172 kWh). Implement occupancy-based shutoff for lights and AC.  Investigate the cause of the long AC runtimes.
+* **System optimization:** Investigate the reasons behind the long p99 intervals for door openings and occupancy durations.  Consider implementing rules to automatically disable the AC when windows are open.
+* **Maintenance needs:** Replace the door sensor battery as it is low.
+* **Automation improvements:** Implement occupancy-based shutoffs for lights and AC.  Add a rule to automatically disable the AC when a window is detected as open.
+* **User behavior modifications:** Provide feedback regarding the two manual AC overrides to understand their necessity and explore opportunities for automation or improved scheduling.  Investigate the reasons for the exceptionally long periods of door opening identified by the p99 interval.
+
+
+====================================================================================================
+End of Report
+====================================================================================================

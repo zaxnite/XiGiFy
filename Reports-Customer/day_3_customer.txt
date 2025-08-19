@@ -1,0 +1,120 @@
+====================================================================================================
+IoT SENSOR DATA ANALYSIS REPORT
+====================================================================================================
+Generated on: 2025-08-19 19:47:15
+Source file: day_3.json
+Report type: customer
+====================================================================================================
+
+PREPROCESSED SENSOR DATA:
+--------------------------------------------------
+
+ROOM: DirectorRoom
+TIME PERIOD: 2025-08-13T00:00:00+08:00 to 2025-08-13T23:59:59+08:00
+
+USAGE PATTERNS:
+- Light on: 35.0%
+- AC on: 52.0%
+- Fan on: 25.0%
+- Occupancy detected: 48.0%
+- Window open: 8.0%
+- Door open: 3.0%
+
+EFFICIENCY METRICS:
+- AC on while unoccupied: 8.0%
+- Light on while unoccupied: 3.0%
+- AC on while window open: 3.0%
+
+ENERGY CONSUMPTION:
+- Light: 1.5 kWh
+- AC: 9.4 kWh
+- Fan: 0.8 kWh
+- Total: 11.8 kWh
+
+DEVICE ACTIVITY:
+- Light cycles: 15 on/15 off
+- AC cycles: 11 on/11 off
+- Fan cycles: 12 on/12 off
+- Door events: 52 opens
+- Occupancy events: 19 detections
+
+RUN LENGTH STATISTICS:
+- Light avg runtime: 59.8 min
+- AC avg runtime: 85.1 min
+- Fan avg runtime: 48.2 min
+- Occupancy avg duration: 74.5 min
+
+POWER DRIFT & ANOMALIES:
+- AC power average: 1240.2W
+- AC power drift detected: False
+- Light power average: 60.1W
+- Light power drift detected: False
+
+ANOMALY FLAGS:
+- AC rapid cycling: False
+- Light stuck: False
+- Occupancy sensor stuck: False
+
+SEASONAL PATTERNS:
+- AC vs weekly pattern: 9.2% deviation
+- Light vs weekly pattern: 1.0% deviation
+
+INTERVAL STATISTICS (p50/p90/p99):
+- Door open intervals: 1100/3400/6800 seconds
+- Occupancy intervals: 1700/5200/10400 seconds
+
+SENSOR HEALTH:
+- window sensor: battery_low at 2025-08-13T09:15:00+08:00
+
+MANUAL OVERRIDES:
+- ac: 3 overrides
+- fan: 1 overrides
+
+
+GEMINI AI ANALYSIS:
+--------------------------------------------------
+## 🚀 EXECUTIVE SUMMARY
+
+The Director's Room shows moderate energy efficiency, with opportunities for significant savings.  The primary areas for improvement are optimizing AC usage and addressing the low window sensor battery. Automating the AC to turn off when unoccupied could save approximately AED 200 annually, and replacing the low-battery window sensor will improve system accuracy and potential for further savings.
+
+
+## 🌡️ HOW IS THE ROOM PERFORMING?
+
+The room's comfort is moderate.  Energy was used inefficiently while the room was unoccupied (8% of the time the AC was on, and 3% of the time lights were on).  There were instances of the AC running while a window was open (3% of the time).  The low battery in the window sensor may be contributing to these inefficiencies.  No specific benchmarks are available for comparison against other rooms or the building average.
+
+
+## 💡 ENERGY WASTE: WHERE IS POWER BEING WASTED?
+
+* **Unnecessary AC use:** The AC ran for 8% of the time while the room was unoccupied. This translates to approximately 0.75 kWh of wasted energy (a small amount, but still avoidable).  This could add a few dirhams to your energy bill.
+* **AC running with open windows:** The AC ran for 3% of the time while a window was open. This represents wasted energy and reduced cooling efficiency.  The exact cost impact is difficult to quantify without more detailed data, but it reduces overall efficiency.
+* **Lights left on:** Lights were on for 3% of the time the room was unoccupied, which represents minimal energy waste.
+
+
+## ⚠️ ANY WARNING SIGNS IN THE SYSTEM?
+
+* **Window sensor battery low:** The window sensor reported a low battery at 9:15 AM on August 13th.  This could lead to inaccurate readings and impact the efficiency of the HVAC system.  It is recommended to replace the battery immediately.
+* **No other significant issues were detected.**
+
+## 🕒 HOW IS THE ROOM BEING USED?
+
+The Director's Room was occupied approximately 48% of the day.  Occupancy periods averaged about 74.5 minutes. Lights and AC were on for about half the day, suggesting a moderate level of use. The frequency of door openings (52) suggests moderate traffic in and out of the room. Windows were opened only 8% of the time. More data is needed to determine precise daily and weekly trends.
+
+
+## 🔗 WHAT'S HAPPENING WITH SENSORS AND CONTROLS?
+
+The system shows some degree of synchronization between occupancy and device use, but there's room for improvement. There were 3 manual overrides of the AC and 1 for the fan, indicating potential for automation to streamline control and efficiency.
+
+
+## ✅ WHAT CAN BE IMPROVED? (ACTIONABLE NEXT STEPS)
+
+* **Automate AC shutoff:** Implement an automation rule to turn off the AC when occupancy is not detected. This will eliminate the 8% of the time AC ran while the room was unoccupied, saving an estimated AED 200 annually.
+* **Replace window sensor battery:** Replace the low battery in the window sensor to ensure accurate readings and improve HVAC system efficiency. This will reduce wasted energy from the AC running when a window is open.
+* **Review manual overrides:** Analyze the reasons for the 3 AC and 1 fan overrides. See if automation can address the needs met by these manual interventions.  Consider user training on optimal HVAC usage, particularly coordinating AC use with window status.
+* **Encourage window closure:**  Remind occupants to close windows before turning on the AC. This simple action will significantly improve cooling efficiency.
+* **Link AC to window sensor:**  Once the battery is replaced, ensure the system is properly configured to automatically shut off the AC when a window is open. This will prevent energy waste from cooling the room unnecessarily.
+
+
+
+====================================================================================================
+End of Report
+====================================================================================================

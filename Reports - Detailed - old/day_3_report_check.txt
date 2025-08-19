@@ -1,0 +1,143 @@
+Here’s a detailed audit of the AI-generated report against the provided JSON sensor data for 2025-08-13:
+
+---
+
+## 1. DATA EXTRACTION ACCURACY
+
+* **Percentages & Usage Features** ✅
+
+  * Light on: 35.0% ✅ (`light_on_pct: 0.35`)
+  * AC on: 52.0% ✅ (`ac_on_pct: 0.52`)
+  * Fan on: 25.0% ✅ (`fan_on_pct: 0.25`)
+  * Occupancy detected: 48.0% ✅ (`occupancy_detected_pct: 0.48`)
+  * Window open: 8.0% ✅ (`window_open_pct: 0.08`)
+  * Door open: 3.0% ✅ (`door_open_pct: 0.03`)
+
+* **Cross-Sensor Ratios / Efficiency Metrics** ✅
+
+  * AC on while unoccupied: 8.0% ✅
+  * Light on while unoccupied: 3.0% ✅
+  * AC on while window open: 3.0% ✅
+
+* **Energy Consumption** ⚠
+
+  * Light: 1.5 kWh ✅
+  * AC: 9.4 kWh ✅
+  * Fan: 0.8 kWh ❌ JSON shows 0.85 kWh (minor rounding error)
+  * Total: 11.8 kWh ⚠ Sum based on rounded fan value; slightly higher than true sum (1.5 + 9.4 + 0.85 = 11.75 kWh)
+
+* **Device Activity / Event Counts** ✅
+
+  * Light cycles: 15 on/15 off ✅
+  * AC cycles: 11 on/11 off ✅
+  * Fan cycles: 12 on/12 off ✅
+  * Door events: 52 opens ✅ (closes omitted)
+  * Occupancy events: 19 detections ✅ (cleared omitted)
+
+* **Run Length Statistics** ✅
+
+  * Light avg runtime: 59.8 min ✅
+  * AC avg runtime: 85.1 min ✅
+  * Fan avg runtime: 48.2 min ✅
+  * Occupancy avg: 74.5 min ✅
+  * Variances not reported (JSON has variance\_min2/variance\_s2) ⚠
+
+* **Rolling Statistics & Drift** ✅
+
+  * AC power avg 1240.2 W ✅, drift false ✅
+  * Light power avg 60.1 W ✅, drift false ✅
+
+* **Pattern Deviation Flags** ✅
+
+  * AC rapid cycle: False ✅
+  * Light stuck: False ✅
+  * Occupancy stuck: False ✅
+
+* **Seasonal Patterns** ✅
+
+  * AC deviation: 9.2% ✅
+  * Light deviation: 1.0% ✅
+
+* **Interval Statistics** ✅
+
+  * Door p50/p90/p99: 1100/3400/6800 s ✅
+  * Occupancy p50/p90/p99: 1700/5200/10400 s ✅
+
+* **Sensor Health** ✅
+
+  * Window battery\_low at 2025-08-13T09:15:00+08:00 ✅
+
+* **Manual Overrides** ✅
+
+  * AC: 3 overrides ✅
+  * Fan: 1 override ✅
+
+**Summary:** Extraction is mostly accurate; minor rounding for fan energy, variance values missing, door close/occupancy cleared counts omitted.
+
+---
+
+## 2. CALCULATION VALIDITY
+
+* **Wasted Energy Computations** ✅
+
+  * AC unoccupied: 9.4 × 0.08 = 0.752 kWh ✅
+  * Light unoccupied: 1.5 × 0.03 = 0.045 kWh ✅
+  * AC with window open: 9.4 × 0.03 = 0.282 kWh ✅
+
+* **Other Calculations**
+
+  * Total energy slightly rounded due to fan value: 11.8 kWh vs true sum 11.75 kWh (minor discrepancy)
+  * Arithmetic in report otherwise correct.
+
+---
+
+## 3. SENSOR HEALTH & ANOMALY HANDLING
+
+* Window battery\_low correctly reported ✅
+* No hallucinated sensor issues ✅
+* Pattern deviation flags (rapid cycling, stuck sensors) correctly interpreted ✅
+* Power drift flags correctly reported ✅
+* No sensor events omitted ✅
+
+---
+
+## 4. LOGICAL CONSISTENCY & HALLUCINATIONS
+
+* **Unsupported claims / speculative statements**:
+
+  * “Infrequent but sometimes lengthy door openings” ⚠ Reasonable interpretation of p99 but speculative
+  * “Prolonged meetings or other events” ⚠ Inferred cause; not directly in JSON
+  * “Excessive device cycling” correctly noted as data insufficient ✅
+* “Peak usage times and patterns: Not available” ✅ appropriate
+* Speculative language clearly separated from observed data
+
+---
+
+## 5. ANALYTICAL SOUNDNESS
+
+* Insights logically derived from JSON: ✅
+
+  * Energy inefficiencies, cross-sensor correlations, anomaly flags all supported
+  * Wasted energy calculations correct
+* Recommendations actionable and tied to findings ✅
+
+  * Occupancy-based shutoff, AC/window rule, maintenance for window battery
+* Professional, structured, clear ✅
+* Minor critique: include variance values and door/occupancy close counts for completeness
+
+---
+
+## 6. FINAL VERDICT
+
+* **Overall accuracy:** \~95%
+* **Reliability:** Report is reliable for operational use; minor rounding and omission issues do not affect decisions materially.
+* **Critical errors:**
+
+  * Fan energy rounded 0.85 → 0.8 kWh (minor)
+* **Minor improvements:**
+
+  * Include variance metrics from JSON
+  * Include door close counts and occupancy cleared counts
+  * Clarify speculative interpretations as possible causes, not confirmed events
+
+**Conclusion:** AI report is accurate, calculations valid, insights reasonable, and recommendations actionable. Minor rounding and completeness improvements recommended. ✅
