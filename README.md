@@ -1,5 +1,3 @@
-Great — here’s a clean **README.md** you can directly drop into your repo:
-
 ````markdown
 # XiGiFy 
 
@@ -131,7 +129,3 @@ MIT License. See [LICENSE](LICENSE).
 
 ```
 
----
-
-Do you want me to make this README **short and customer-facing** (like a product landing page) or **developer-facing** (focused on setup, usage, and contributions)?
-```
