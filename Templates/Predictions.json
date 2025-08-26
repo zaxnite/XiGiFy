@@ -1,0 +1,26 @@
+[
+  {
+    "final_report": {
+      "Forecasted Energy Consumption": "Expected 12.0–13.0 kWh next 24h",
+      "Peak Usage Prediction": {
+        "AC": "10.2 kWh",
+        "Lights": "1.4 kWh",
+        "Fan": "0.9 kWh"
+      },
+      "Potential Savings": [
+        "Enforce OFF-only rules for AC, lights, fan (~0.8–1.0 kWh)",
+        "Reduce fan runtime by 10% when occupancy < 50%",
+        "Avoid AC operation with windows open (~0.2 kWh savings)"
+      ],
+      "Prescriptive Actions": [
+        "Shift AC start time to match peak occupancy",
+        "Auto-shutdown devices when unoccupied > 10 minutes",
+        "Monitor real-time overrides to optimize automation"
+      ],
+      "Impact Score": {
+        "score": 9.0,
+        "comment": "Following these recommendations can reduce energy consumption and improve operational efficiency"
+      }
+    }
+  }
+]

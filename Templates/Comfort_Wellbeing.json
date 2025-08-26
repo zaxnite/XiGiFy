@@ -1,0 +1,19 @@
+[
+  {
+    "final_report": {
+      "Thermal Comfort": "Average temperature maintained; slight overcooling during unoccupied periods",
+      "Lighting Comfort": "Adequate illumination; minor overuse noted in empty periods",
+      "Ventilation": "Windows open 9% of day with AC running; may reduce air circulation efficiency",
+      "Occupant Behavior": "Manual overrides suggest occasional user intervention; automation largely effective",
+      "Recommendations": [
+        "Adjust AC schedules for unoccupied periods",
+        "Dim lights during low occupancy",
+        "Optimize ventilation when windows are open"
+      ],
+      "Wellbeing Score": {
+        "score": 8.8,
+        "comment": "Occupant comfort maintained; minor adjustments can further enhance wellbeing"
+      }
+    }
+  }
+]

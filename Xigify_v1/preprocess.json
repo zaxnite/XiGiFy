@@ -1,0 +1,96 @@
+[
+  {
+    "canonical": {
+      "room_id": "director_room",
+      "window": {
+        "start": "2025-08-13T00:00:00+08:00",
+        "end": "2025-08-13T23:59:59+08:00",
+        "minutes": 1440
+      },
+      "kwh": {
+        "ac": 7.8,
+        "light": 1.3,
+        "fan": 0.5,
+        "smartplug": 0.9
+      },
+      "total_kwh": 10.5,
+      "on_pct": {
+        "ac": 0.4,
+        "light": 0.32,
+        "fan": 0.25,
+        "smartplug": 0.55
+      },
+      "on_min": {
+        "ac": 576,
+        "light": 461,
+        "fan": 360,
+        "smartplug": 792
+      },
+      "avg_run_min": {
+        "ac": 82,
+        "light": 36,
+        "fan": 25,
+        "smartplug": 15
+      },
+      "on_count": {
+        "ac": 8,
+        "light": 15,
+        "fan": 10,
+        "smartplug": 12
+      },
+      "overrides": {
+        "ac": 1,
+        "light": 0,
+        "fan": 0,
+        "smartplug": 0
+      },
+      "flags": {
+        "ac": {
+          "rapid_cycle": false,
+          "power_drift": false
+        },
+        "light": {
+          "stuck": false
+        },
+        "fan": {},
+        "smartplug": {}
+      },
+      "overlap_pct": {
+        "ac_unoccupied": 0.04,
+        "ac_window_open": 0.01,
+        "light_unoccupied": 0.03,
+        "fan_unoccupied": 0.02,
+        "smartplug_unoccupied": 0.06
+      },
+      "overlap_min": {
+        "ac_unoccupied": 23,
+        "ac_window_open": 5.8,
+        "light_unoccupied": 13.8,
+        "fan_unoccupied": 7.2,
+        "smartplug_unoccupied": 47.5
+      },
+      "context_pct": {
+        "occupancy": 0.52,
+        "window": 0.06
+      },
+      "triggers": {
+        "vacancy": {
+          "ac": 30,
+          "light": 18,
+          "fan": 12,
+          "smartplug": 8
+        },
+        "window_open": {
+          "ac": 10
+        }
+      },
+      "lockout_min": {
+        "ac": 21,
+        "light": 9,
+        "fan": 6,
+        "smartplug": 5
+      },
+      "computed_score": 9.3
+    }
+  }
+]

@@ -1,0 +1,209 @@
+{
+  "room_id": "DirectorRoom",
+  "summary_window": {
+    "start": "2025-08-11T00:00:00+08:00",
+    "end": "2025-08-11T23:59:59+08:00"
+  },
+  "ml_abstracted_metrics": {
+    "usage_features": {
+      "light_on_pct": 0.35,
+      "ac_on_pct": 0.45,
+      "fan_on_pct": 0.2,
+      "occupancy_detected_pct": 0.5,
+      "window_open_pct": 0.05,
+      "door_open_pct": 0.02
+    },
+    "runtime_features": {
+      "light_active_pct": 0.35,
+      "ac_active_pct": 0.45,
+      "fan_active_pct": 0.2,
+      "occupancy_active_pct": 0.5,
+      "window_open_active_pct": 0.05,
+      "door_open_active_pct": 0.02
+    },
+    "cross_sensor_ratios": {
+      "ac_on_while_unoccupied_pct": 0.05,
+      "light_on_while_unoccupied_pct": 0.02,
+      "ac_on_while_window_open_pct": 0.01
+    },
+    "run_length_statistics": {
+      "light": {
+        "avg_min": 60.1,
+        "variance_min2": 150.2
+      },
+      "ac": {
+        "avg_min": 90.5,
+        "variance_min2": 210.8
+      },
+      "fan": {
+        "avg_min": 45.0,
+        "variance_min2": 95.3
+      },
+      "occupancy": {
+        "avg_min": 75.2,
+        "variance_min2": 180.4
+      },
+      "window_open": {
+        "avg_min": 10.3,
+        "variance_min2": 15.1
+      },
+      "door_open": {
+        "avg_s": 20.5,
+        "variance_s2": 40.2
+      }
+    },
+    "rolling_statistics_and_drift": {
+      "ac_power_avg_w5m": 1200.5,
+      "ac_power_drift_flag": false,
+      "light_power_avg_w5m": 60.2,
+      "light_power_drift_flag": false
+    },
+    "pattern_deviation_flags": {
+      "ac_rapid_cycle_flag": false,
+      "light_stuck_flag": false,
+      "occupancy_sensor_stuck_flag": false
+    },
+    "seasonal_pattern_summaries": {
+      "ac_vs_weekly_pct": 2.5,
+      "light_vs_weekly_pct": 1.1
+    },
+    "inter_event_distributions": {
+      "door_open_intervals_s": {
+        "p50": 1200,
+        "p90": 3600,
+        "p99": 7200
+      },
+      "occupancy_intervals_s": {
+        "p50": 1800,
+        "p90": 5400,
+        "p99": 10800
+      }
+    }
+  },
+  "raw_stream_derived_metrics": {
+    "event_counts_and_timing": {
+      "light": {
+        "on_count": 15,
+        "off_count": 15
+      },
+      "ac": {
+        "on_count": 8,
+        "off_count": 8
+      },
+      "fan": {
+        "on_count": 10,
+        "off_count": 10
+      },
+      "window": {
+        "open_count": 4,
+        "close_count": 4
+      },
+      "door": {
+        "open_count": 45,
+        "close_count": 45
+      },
+      "occupancy": {
+        "detected_count": 20,
+        "cleared_count": 20
+      }
+    },
+    "energy_proxy_metrics": {
+      "light_kwh": 1.5,
+      "ac_kwh": 8.1,
+      "fan_kwh": 0.7
+    },
+    "sensor_health_events": [],
+    "manual_override_counters": [
+      {
+        "device": "ac",
+        "count": 1
+      }
+    ]
+  },
+  "energy_efficiency_analysis": {
+    "efficiency_score": 40.73,
+    "total_energy_kwh": 10.3,
+    "waste_indicators": {
+      "ac_waste_unoccupied": 0.05,
+      "light_waste_unoccupied": 0.02,
+      "ac_waste_window_open": 0.01,
+      "total_waste_score": 0.15000000000000002
+    },
+    "energy_breakdown": {
+      "light_kwh": 1.5,
+      "ac_kwh": 8.1,
+      "fan_kwh": 0.7
+    }
+  },
+  "comfort_wellbeing_analysis": {
+    "comfort_score": 77.83,
+    "alignment_metrics": {
+      "occupancy_light_ratio": 0.7,
+      "occupancy_ac_ratio": 0.9,
+      "unoccupied_device_usage": 0.07,
+      "window_ac_conflict": 0.01
+    },
+    "occupancy_stats": {
+      "detected_pct": 0.5,
+      "avg_duration_min": 75.2,
+      "variance_min2": 180.4
+    }
+  },
+  "predictive_prescriptive_analysis": {
+    "predictive_flags": {
+      "power_drift_detected": false,
+      "pattern_anomaly_detected": false,
+      "seasonal_deviation_high": false,
+      "ac_usage_trending_up": false
+    },
+    "frequent_overrides": false,
+    "total_override_count": 1,
+    "override_breakdown": {
+      "ac": 1
+    },
+    "risk_score": 0
+  },
+  "sensor_health_analysis": {
+    "battery_low_flag": false,
+    "signal_degradation_flag": false,
+    "any_health_issue": false,
+    "affected_sensors": {
+      "battery_low": [],
+      "signal_degradation": []
+    },
+    "total_health_events": 0,
+    "health_events_detail": []
+  },
+  "aggregated_events": {
+    "light": {
+      "total_on_events": 15,
+      "total_off_events": 15,
+      "total_cycles": 15
+    },
+    "ac": {
+      "total_on_events": 8,
+      "total_off_events": 8,
+      "total_cycles": 8
+    },
+    "fan": {
+      "total_on_events": 10,
+      "total_off_events": 10,
+      "total_cycles": 10
+    },
+    "window": {
+      "total_open_events": 4,
+      "total_close_events": 4,
+      "total_cycles": 4
+    },
+    "door": {
+      "total_open_events": 45,
+      "total_close_events": 45,
+      "total_cycles": 45
+    },
+    "occupancy": {
+      "total_detected_events": 20,
+      "total_cleared_events": 20,
+      "total_cycles": 20
+    }
+  }
+}

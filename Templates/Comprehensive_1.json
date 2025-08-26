@@ -1,0 +1,56 @@
+[
+  {
+    "final_report": {
+      "Energy Efficiency": {
+        "Total Energy Consumed": "12.5 kWh",
+        "Device Breakdown": {
+          "AC": "10.2 kWh",
+          "Lights": "1.4 kWh",
+          "Fan": "0.9 kWh"
+        },
+        "Unoccupied Device Runtime": {
+          "AC": "23 minutes (11% of runtime)",
+          "Lights": "14 minutes (4% of runtime)",
+          "Fan": "7 minutes (3% of runtime)"
+        },
+        "Window Open Inefficiency": {
+          "AC runtime while window open": "6 minutes (5% of AC runtime)"
+        },
+        "Manual Overrides": {
+          "AC": 4,
+          "Fan": 2,
+          "Lights": 0
+        },
+        "Recommendations": [
+          "Auto-shutdown AC, lights, and fan if unoccupied > 10 minutes",
+          "Disable AC when windows are open",
+          "Monitor manual override frequency to assess automation effectiveness"
+        ],
+        "Efficiency Score": {
+          "score": 8.7,
+          "justification": "High overall efficiency; minor waste occurs during unoccupied periods and window-open AC usage."
+        }
+      },
+      "Comfort & Wellbeing": {
+        "Thermal Comfort": "Average AC temperature maintained; slight overcooling observed during unoccupied periods.",
+        "Lighting Comfort": "Average light runtime aligns with occupancy; minor periods of unnecessary lighting noted.",
+        "Ventilation": "Windows opened 9% of the day while AC was operating, reducing ventilation efficiency.",
+        "Occupant Behavior": "Manual overrides suggest occasional user intervention; automation covers most comfort needs effectively.",
+        "Recommendations": [
+          "Adjust AC runtime for unoccupied periods to prevent overcooling",
+          "Dim lights during low occupancy",
+          "Ensure ventilation is optimized when windows are open"
+        ]
+      },
+      "Predictive & Prescriptive": {
+        "Forecasted Energy Consumption": "Expected 12.0–13.0 kWh next day",
+        "Potential Savings": "0.8–1.0 kWh by enforcing OFF-only rules and reducing AC runtime with open windows",
+        "Prescriptive Actions": [
+          "Shift AC start time to align with occupancy peaks",
+          "Reduce fan runtime by 10% when occupancy < 50%",
+          "Implement real-time monitoring for unoccupied device runtime"
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "final_report": {
+      "Total Energy Usage": "12.5 kWh",
+      "Device Breakdown": {
+        "AC": "10.2 kWh",
+        "Lights": "1.4 kWh",
+        "Fan": "0.9 kWh"
+      },
+      "Unoccupied Runtime": {
+        "AC": "23 min (11%)",
+        "Lights": "14 min (4%)",
+        "Fan": "7 min (3%)"
+      },
+      "Window/Open Inefficiency": "AC ran 6 min with windows open",
+      "Manual Overrides": {
+        "AC": 4,
+        "Fan": 2,
+        "Lights": 0
+      },
+      "Recommendations": [
+        "Auto-off devices if unoccupied > 10 min",
+        "Prevent AC operation when windows are open",
+        "Monitor manual override frequency"
+      ],
+      "Efficiency Score": {
+        "score": 8.7,
+        "comment": "Efficient overall; minor unoccupied and window-open runtime can be optimized"
+      }
+    }
+  }
+]

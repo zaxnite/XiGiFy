@@ -1,7 +1,7 @@
 ````markdown
 # XiGiFy 
 
-A Python-based tool that analyzes structured IoT sensor data from smart rooms using Google's Gemini AI to detect energy inefficiencies, anomalies, behavioral patterns, and actionable insights.
+A Python-based tool that analyzes structured IoT sensor data from smart rooms using Google's Gemini AI 1.5 Flash to detect energy inefficiencies, anomalies, behavioral patterns, and actionable insights.
 
 ---
 

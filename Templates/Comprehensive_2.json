@@ -1,0 +1,49 @@
+[
+  {
+    "final_report": {
+      "Energy Efficiency": {
+        "Total Consumption": "12.5 kWh",
+        "Device Contributions": {
+          "AC": "10.2 kWh",
+          "Lights": "1.4 kWh",
+          "Fan": "0.9 kWh"
+        },
+        "Inefficiency Highlights": [
+          "AC ran 23 min unoccupied",
+          "Lights ran 14 min unoccupied",
+          "Fan ran 7 min unoccupied",
+          "AC ran 6 min with windows open"
+        ],
+        "Manual Overrides": [
+          "AC: 4 times, Fan: 2 times, Lights: 0"
+        ],
+        "Efficiency Recommendations": [
+          "Auto-off devices if unoccupied > 10 minutes",
+          "Prevent AC operation when windows are open",
+          "Monitor override trends for further optimization"
+        ],
+        "Efficiency Score": 8.7
+      },
+      "Comfort & Wellbeing": {
+        "Temperature": "Maintained within comfort range; minor overcooling during unoccupied periods",
+        "Lighting": "Appropriate for occupancy; slight overuse when room empty",
+        "Ventilation": "Windows open 9% of day; AC operating simultaneously reduces air circulation",
+        "Behavior": "Limited manual overrides indicate effective automation",
+        "Recommendations": [
+          "Fine-tune AC schedules to reduce overcooling",
+          "Implement light dimming during unoccupied periods",
+          "Ensure ventilation efficiency with simultaneous AC and open windows"
+        ]
+      },
+      "Predictive & Prescriptive": {
+        "Next-Day Energy Forecast": "12.0–13.0 kWh",
+        "Potential Optimizations": [
+          "Enforce OFF-only rules for AC, lights, and fan",
+          "Reduce fan runtime by 10% during low occupancy",
+          "Adjust AC start times to match peak occupancy"
+        ],
+        "Expected Savings": "0.8–1.0 kWh daily"
+      }
+    }
+  }
+]

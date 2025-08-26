@@ -1,421 +1,255 @@
+#!/usr/bin/env python3
 """
-XiGiFy
-
-This script analyzes structured IoT sensor data from JSON files using Google's Gemini API
-to extract insights about energy inefficiencies, anomalies, and behavioral patterns.
+Deterministic AI Interpretation Engine for IoT Sensor Data
+Generates consistent, minimal-variation interpretations using Google Gemini API
 """
 
 import json
+import logging
+import os
 import sys
 import time
-import logging
 import argparse
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, Optional, Union
-import google.generativeai as genai
-import os
+from typing import Dict, Any, Optional, Tuple
 from dotenv import load_dotenv
+import google.generativeai as genai
 
 # Load environment variables
 load_dotenv()
 
-# Constants
-DEFAULT_MODEL = 'gemini-1.5-flash'
+# Configuration constants
+DEFAULT_DAY = "day_1"
+DEFAULT_REPORT_TYPE = "internal"
+DEFAULT_MODEL = "gemini-1.5-flash"
 DEFAULT_MAX_RETRIES = 3
-DEFAULT_RETRY_DELAY = 1
-DEFAULT_DAY = 'day_4'
-#DEFAULT_REPORT_TYPE = 'internal'
-DEFAULT_REPORT_TYPE = 'customer'
-DEFAULT_LOG_LEVEL = 'INFO'
-DEFAULT_PRECISION = 1
-DEFAULT_PERCENTAGE_PRECISION = 1
-
-# File and output formatting constants
-REPORT_SEPARATOR = "=" * 100
-SECTION_SEPARATOR = "-" * 50
-LOG_FILE_NAME = 'iot_analysis.log'
-JSON_FILE_SUFFIX = '.json'
-
-# Report formatting constants
-UNKNOWN_VALUE = "Unknown"
-NOT_AVAILABLE = "N/A"
-NO_HEALTH_ISSUES = "No sensor health issues detected"
-NO_MANUAL_OVERRIDES = "No manual overrides detected"
-
-# Validation constants
-REQUIRED_TOP_LEVEL_FIELDS = [
-    "room_id",
-    "summary_window", 
-    "ml_abstracted_metrics",
-    "raw_stream_derived_metrics"
-]
-
-REQUIRED_ML_METRICS_FIELDS = [
-    "usage_features",
-    "cross_sensor_ratios", 
-    "run_length_statistics"
-]
-
-REQUIRED_RAW_METRICS_FIELDS = [
-    "event_counts_and_timing",
-    "energy_proxy_metrics"
-]
-
-# Time formatting constants
+DEFAULT_RETRY_DELAY = 2
+DEFAULT_LOG_LEVEL = "INFO"
+JSON_FILE_SUFFIX = "_preprocessed.json"
 TIMESTAMP_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-# Configure logging
+# Logging setup
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(LOG_FILE_NAME),
-        logging.StreamHandler()
-    ]
+    format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-def validate_json_structure(data: Dict[str, Any]) -> bool:
+# Report separators
+REPORT_SEPARATOR = "=" * 80
+SECTION_SEPARATOR = "-" * 60
+
+
+def get_deterministic_prompt_template(report_type: str) -> str:
     """
-    Validate that the JSON has the required structure for IoT sensor data.
+    Get deterministic prompt template based on report type.
     
     Args:
-        data: Parsed JSON data
+        report_type: 'customer' or 'internal'
         
     Returns:
-        True if valid structure, False otherwise
+        Structured prompt template with minimal variation points
     """
-    # Check top-level fields
-    for field in REQUIRED_TOP_LEVEL_FIELDS:
-        if field not in data:
-            logger.error(f"Missing required field: {field}")
-            return False
     
-    # Check ml_abstracted_metrics structure
-    ml_metrics = data.get("ml_abstracted_metrics", {})
-    for field in REQUIRED_ML_METRICS_FIELDS:
-        if field not in ml_metrics:
-            logger.error(f"Missing required ml_abstracted_metrics field: {field}")
-            return False
+    base_structure = """ANALYZE THIS BUILDING SENSOR DATA DETERMINISTICALLY.
+USE ONLY THE PROVIDED METRICS. BE PRECISE AND CONSISTENT.
+
+ROOM_ID: {room_id}
+ANALYSIS_PERIOD: {analysis_period}
+DATA_SUMMARY: {data_summary}
+
+SECTION A - ENERGY EFFICIENCY INTERPRETATION:
+Efficiency Score: {efficiency_score}
+Total Energy Consumption: {total_energy_kwh} kWh
+Energy Waste Indicators: {waste_indicators}
+Device Runtime Ratios: {device_ratios}
+
+INTERPRET: Based ONLY on these efficiency metrics, provide exactly 2 sentences describing:
+1. Overall energy performance level (excellent/good/fair/poor)
+2. Primary waste source if efficiency_score < 0.7
+
+SECTION B - COMFORT & WELLBEING INTERPRETATION:
+Comfort Score: {comfort_score}
+Occupancy-Light Alignment: {occupancy_light_alignment}%
+AC Runtime Stability: {ac_runtime_stability}
+Temperature Variation: {temp_variation}
+
+INTERPRET: Based ONLY on these comfort metrics, provide exactly 2 sentences describing:
+1. Overall comfort level (optimal/adequate/suboptimal/poor)
+2. Primary comfort issue if comfort_score < 0.7
+
+SECTION C - PREDICTIVE & PRESCRIPTIVE INSIGHTS:
+Drift Detection Flags: {drift_flags}
+Pattern Trends: {pattern_trends}
+Manual Override Count: {manual_overrides}
+System Health Events: {system_health_events}
+
+INTERPRET: Based ONLY on these predictive metrics, provide exactly 2 sentences describing:
+1. System stability status (stable/minor-issues/significant-issues)
+2. Recommended action priority (none/low/medium/high)"""
+
+    if report_type == "customer":
+        return base_structure + """
+
+OUTPUT FORMAT REQUIREMENTS:
+- Use simple, non-technical language
+- Focus on outcomes (comfort, savings, convenience)
+- Avoid technical jargon and sensor names
+- Structure as: ENERGY_EFFICIENCY: [2 sentences] | COMFORT_WELLBEING: [2 sentences] | PREDICTIVE_INSIGHTS: [2 sentences]
+- Be deterministic - same input should produce identical output
+- Temperature=0, deterministic=true"""
     
-    # Check raw_stream_derived_metrics structure
-    raw_metrics = data.get("raw_stream_derived_metrics", {})
-    for field in REQUIRED_RAW_METRICS_FIELDS:
-        if field not in raw_metrics:
-            logger.error(f"Missing required raw_stream_derived_metrics field: {field}")
-            return False
-    
-    logger.info("JSON structure validation passed")
-    return True
+    else:  # internal
+        return base_structure + """
 
-def safe_percentage(value: Optional[float]) -> str:
-    """Safely format percentage values"""
-    if value is None:
-        return NOT_AVAILABLE
-    return f"{value * 100:.{DEFAULT_PERCENTAGE_PRECISION}f}%"
+OUTPUT FORMAT REQUIREMENTS:
+- Use technical precision and specific metrics
+- Include quantitative references where available
+- Reference specific sensor types and thresholds
+- Structure as: ENERGY_EFFICIENCY: [2 sentences] | COMFORT_WELLBEING: [2 sentences] | PREDICTIVE_INSIGHTS: [2 sentences]
+- Be deterministic - same input should produce identical output
+- Temperature=0, deterministic=true"""
 
-def safe_float(value: Optional[Union[int, float]], precision: int = DEFAULT_PRECISION) -> str:
-    """Safely format float values"""
-    if value is None:
-        return NOT_AVAILABLE
-    return f"{float(value):.{precision}f}"
 
-def safe_int(value: Optional[int]) -> str:
-    """Safely format integer values"""
-    if value is None:
-        return NOT_AVAILABLE
-    return str(value)
-
-def preprocess_sensor_data(data: Dict[str, Any]) -> str:
+def extract_interpretation_data(sensor_data: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Extract and format key metrics from the sensor data for analysis.
+    Extract specific data points needed for deterministic interpretation.
     
     Args:
-        data: Raw JSON sensor data
+        sensor_data: Processed JSON data
         
     Returns:
-        Formatted string summary of key metrics
+        Extracted data dictionary
     """
-    room_id = data.get("room_id", UNKNOWN_VALUE)
-    window = data.get("summary_window", {})
-    start_time = window.get("start", UNKNOWN_VALUE)
-    end_time = window.get("end", UNKNOWN_VALUE)
-    
-    # Extract ML metrics
-    ml_metrics = data.get("ml_abstracted_metrics", {})
-    usage = ml_metrics.get("usage_features", {})
-    cross_ratios = ml_metrics.get("cross_sensor_ratios", {})
-    run_stats = ml_metrics.get("run_length_statistics", {})
-    drift_data = ml_metrics.get("rolling_statistics_and_drift", {})
-    deviation_flags = ml_metrics.get("pattern_deviation_flags", {})
-    seasonal = ml_metrics.get("seasonal_pattern_summaries", {})
-    intervals = ml_metrics.get("inter_event_distributions", {})
-    
-    # Extract raw metrics
-    raw_metrics = data.get("raw_stream_derived_metrics", {})
-    event_counts = raw_metrics.get("event_counts_and_timing", {})
-    energy = raw_metrics.get("energy_proxy_metrics", {})
-    health_events = raw_metrics.get("sensor_health_events", [])
-    manual_overrides = raw_metrics.get("manual_override_counters", [])
-    
-    # Calculate total energy
-    total_energy = sum(v for v in energy.values() if isinstance(v, (int, float)))
-    
-    # Format the summary
-    summary = f"""
-ROOM: {room_id}
-TIME PERIOD: {start_time} to {end_time}
+    try:
+        # Extract basic info
+        room_id = sensor_data.get("room_id", "Unknown")
+        summary_window = sensor_data.get("summary_window", {})
+        analysis_period = f"{summary_window.get('start', 'Unknown')} to {summary_window.get('end', 'Unknown')}"
+        
+        # Extract energy efficiency data
+        energy_section = sensor_data.get("energy_efficiency_analysis", {})
+        efficiency_score = energy_section.get("efficiency_score", 0.0)
+        total_energy = energy_section.get("total_energy_kwh", 0.0)
+        waste_indicators = energy_section.get("waste_indicators", {})
+        
+        # Extract comfort data
+        comfort_section = sensor_data.get("comfort_wellbeing_analysis", {})
+        comfort_score = comfort_section.get("comfort_score", 0.0)
+        alignment_metrics = comfort_section.get("alignment_metrics", {})
+        occupancy_light_alignment = alignment_metrics.get("occupancy_light_ratio", 0.0) * 100
+        
+        # Extract ML abstracted metrics for AC stability approximation
+        ml_metrics = sensor_data.get("ml_abstracted_metrics", {})
+        runtime_stats = ml_metrics.get("run_length_statistics", {})
+        ac_stats = runtime_stats.get("ac", {})
+        ac_variance = ac_stats.get("variance_min2", 0.0)
+        ac_stability = max(0, 1.0 - (ac_variance / 1000))  # Normalize variance to stability score
+        
+        # Temperature variation - use occupancy variance as proxy for environmental stability
+        occupancy_stats = runtime_stats.get("occupancy", {})
+        temp_variation = min(1.0, occupancy_stats.get("variance_min2", 0.0) / 500)  # Normalize to 0-1
+        
+        # Extract predictive data
+        predictive_section = sensor_data.get("predictive_prescriptive_analysis", {})
+        drift_flags = predictive_section.get("predictive_flags", {})
+        
+        # Pattern trends from rolling statistics
+        rolling_stats = ml_metrics.get("rolling_statistics_and_drift", {})
+        pattern_trends = {
+            "ac_power_drift": rolling_stats.get("ac_power_drift_flag", False),
+            "light_power_drift": rolling_stats.get("light_power_drift_flag", False)
+        }
+        
+        # Manual overrides
+        override_breakdown = predictive_section.get("override_breakdown", {})
+        manual_overrides = sum(override_breakdown.values()) if isinstance(override_breakdown, dict) else 0
+        
+        # System health
+        sensor_health = sensor_data.get("sensor_health_analysis", {})
+        system_health_events = sensor_health.get("total_health_events", 0)
+        
+        # Calculate device ratios from usage features
+        usage_features = ml_metrics.get("usage_features", {})
+        device_ratios = {
+            "light": usage_features.get("light_on_pct", 0.0),
+            "ac": usage_features.get("ac_on_pct", 0.0),
+            "fan": usage_features.get("fan_on_pct", 0.0),
+            "occupancy": usage_features.get("occupancy_detected_pct", 0.0)
+        }
+        
+        # Create summary from aggregated events
+        aggregated_events = sensor_data.get("aggregated_events", {})
+        total_events = sum(device.get("total_cycles", 0) for device in aggregated_events.values())
+        data_summary = f"Room: {room_id}, Total Device Cycles: {total_events}, Energy: {total_energy}kWh"
+        
+        return {
+            "room_id": room_id,
+            "analysis_period": analysis_period,
+            "data_summary": data_summary,
+            "efficiency_score": round(efficiency_score, 3),
+            "total_energy_kwh": round(total_energy, 2),
+            "waste_indicators": waste_indicators,
+            "device_ratios": device_ratios,
+            "comfort_score": round(comfort_score, 3),
+            "occupancy_light_alignment": round(occupancy_light_alignment, 1),
+            "ac_runtime_stability": round(ac_stability, 3),
+            "temp_variation": round(temp_variation, 3),
+            "drift_flags": drift_flags,
+            "pattern_trends": pattern_trends,
+            "manual_overrides": manual_overrides,
+            "system_health_events": system_health_events
+        }
+        
+    except Exception as e:
+        logger.error(f"Error extracting interpretation data: {e}")
+        return {}
 
-USAGE PATTERNS:
-- Light on: {safe_percentage(usage.get('light_on_pct'))}
-- AC on: {safe_percentage(usage.get('ac_on_pct'))}
-- Fan on: {safe_percentage(usage.get('fan_on_pct'))}
-- Occupancy detected: {safe_percentage(usage.get('occupancy_detected_pct'))}
-- Window open: {safe_percentage(usage.get('window_open_pct'))}
-- Door open: {safe_percentage(usage.get('door_open_pct'))}
 
-EFFICIENCY METRICS:
-- AC on while unoccupied: {safe_percentage(cross_ratios.get('ac_on_while_unoccupied_pct'))}
-- Light on while unoccupied: {safe_percentage(cross_ratios.get('light_on_while_unoccupied_pct'))}
-- AC on while window open: {safe_percentage(cross_ratios.get('ac_on_while_window_open_pct'))}
-
-ENERGY CONSUMPTION:
-- Light: {safe_float(energy.get('light_kwh'))} kWh
-- AC: {safe_float(energy.get('ac_kwh'))} kWh
-- Fan: {safe_float(energy.get('fan_kwh'))} kWh
-- Total: {safe_float(total_energy)} kWh
-
-DEVICE ACTIVITY:
-- Light cycles: {safe_int(event_counts.get('light', {}).get('on_count'))} on/{safe_int(event_counts.get('light', {}).get('off_count'))} off
-- AC cycles: {safe_int(event_counts.get('ac', {}).get('on_count'))} on/{safe_int(event_counts.get('ac', {}).get('off_count'))} off
-- Fan cycles: {safe_int(event_counts.get('fan', {}).get('on_count'))} on/{safe_int(event_counts.get('fan', {}).get('off_count'))} off
-- Door events: {safe_int(event_counts.get('door', {}).get('open_count'))} opens
-- Occupancy events: {safe_int(event_counts.get('occupancy', {}).get('detected_count'))} detections
-
-RUN LENGTH STATISTICS:
-- Light avg runtime: {safe_float(run_stats.get('light', {}).get('avg_min'))} min
-- AC avg runtime: {safe_float(run_stats.get('ac', {}).get('avg_min'))} min
-- Fan avg runtime: {safe_float(run_stats.get('fan', {}).get('avg_min'))} min
-- Occupancy avg duration: {safe_float(run_stats.get('occupancy', {}).get('avg_min'))} min
-
-POWER DRIFT & ANOMALIES:
-- AC power average: {safe_float(drift_data.get('ac_power_avg_w5m'))}W
-- AC power drift detected: {drift_data.get('ac_power_drift_flag', False)}
-- Light power average: {safe_float(drift_data.get('light_power_avg_w5m'))}W
-- Light power drift detected: {drift_data.get('light_power_drift_flag', False)}
-
-ANOMALY FLAGS:
-- AC rapid cycling: {deviation_flags.get('ac_rapid_cycle_flag', False)}
-- Light stuck: {deviation_flags.get('light_stuck_flag', False)}
-- Occupancy sensor stuck: {deviation_flags.get('occupancy_sensor_stuck_flag', False)}
-
-SEASONAL PATTERNS:
-- AC vs weekly pattern: {safe_float(seasonal.get('ac_vs_weekly_pct'))}% deviation
-- Light vs weekly pattern: {safe_float(seasonal.get('light_vs_weekly_pct'))}% deviation
-
-INTERVAL STATISTICS (p50/p90/p99):
-- Door open intervals: {safe_int(intervals.get('door_open_intervals_s', {}).get('p50'))}/{safe_int(intervals.get('door_open_intervals_s', {}).get('p90'))}/{safe_int(intervals.get('door_open_intervals_s', {}).get('p99'))} seconds
-- Occupancy intervals: {safe_int(intervals.get('occupancy_intervals_s', {}).get('p50'))}/{safe_int(intervals.get('occupancy_intervals_s', {}).get('p90'))}/{safe_int(intervals.get('occupancy_intervals_s', {}).get('p99'))} seconds
-
-SENSOR HEALTH:
-"""
-    
-    if health_events:
-        for event in health_events:
-            summary += f"- {event.get('sensor', UNKNOWN_VALUE)} sensor: {event.get('event', UNKNOWN_VALUE)} at {event.get('timestamp', UNKNOWN_VALUE)}\n"
-    else:
-        summary += f"- {NO_HEALTH_ISSUES}\n"
-    
-    summary += "\nMANUAL OVERRIDES:\n"
-    if manual_overrides:
-        for override in manual_overrides:
-            summary += f"- {override.get('device', UNKNOWN_VALUE)}: {safe_int(override.get('count'))} overrides\n"
-    else:
-        summary += f"- {NO_MANUAL_OVERRIDES}\n"
-    
-    return summary
-
-def get_analysis_prompt(preprocessed_data: str, report_type: str) -> str:
+def create_deterministic_prompt(data: Dict[str, Any], report_type: str) -> str:
     """
-    Get the appropriate analysis prompt based on report type.
+    Create deterministic prompt from extracted data.
     
     Args:
-        preprocessed_data: Formatted sensor data summary
-        report_type: Type of report ('customer' or 'internal')
+        data: Extracted interpretation data
+        report_type: 'customer' or 'internal'
         
     Returns:
         Formatted prompt string
     """
-    if report_type == "internal":
-        return f"""You are an expert IoT data analyst specializing in smart building systems and energy efficiency.  
-            Analyze the following sensor data from a smart room and generate a comprehensive, accurate, and actionable report.
+    template = get_deterministic_prompt_template(report_type)
+    
+    try:
+        return template.format(**data)
+    except KeyError as e:
+        logger.error(f"Missing data field for prompt: {e}")
+        return ""
 
-            SENSOR DATA:
-            {preprocessed_data}
-
-            Please provide a detailed analysis covering these areas. Always follow this exact structure, in order, and do not omit any section:
-
-            ## ENERGY INEFFICIENCIES
-            Identify quantifiable energy waste patterns using only the provided data:
-            - Devices running when the room is unoccupied (e.g., AC or lights on during 0% occupancy)
-            - HVAC operation conflicting with environmental conditions (e.g., AC on while windows are open)
-            - Excessive device cycling (based on on/off counts)
-            - Power consumption anomalies (using rolling power averages and drift flags)
-
-            For any energy waste calculation:
-            - Use the formula: (device_energy_kWh) × (inefficiency_percentage)
-            - Show all steps explicitly (e.g., 8.1 kWh × 0.05 = 0.405 kWh of wasted energy)
-            - Reference the exact JSON field used (e.g., "cross_sensor_ratios.ac_on_while_unoccupied_pct")
-
-            ## ANOMALIES & SYSTEM ISSUES
-            Detect potential system problems using anomaly flags and statistical metrics:
-            - Sensor malfunctions or stuck readings (check pattern_deviation_flags and sensor_health_events)
-            - Rapid cycling of devices (review pattern_deviation_flags and on/off counts)
-            - Power drift issues (use rolling_statistics_and_drift flags and values)
-            - Unusual runtime patterns (compare avg_min across devices using run_length_statistics)
-            - Statistical outliers in timing data (analyze inter_event_distributions p99 values)
-
-            Always distinguish between flagged anomalies (boolean flags) and inferred patterns from counts or durations.
-
-            ## BEHAVIORAL PATTERNS
-            Analyze human and operational behaviors based strictly on available metrics:
-            - Peak usage times and patterns → If no time-stamped data is present, state: "Not available"
-            - Occupancy correlation with device usage → Compare occupancy_detected_pct with light_on_pct, ac_on_pct; avoid assuming causality
-            - Door/window opening patterns → Use open_count and window_open_pct; comment on frequency and duration via p50/p90/p99
-            - Seasonal or weekly deviations → Use seasonal_pattern_summaries fields only; report values directly
-
-            Never infer granular timing (e.g., "morning peak") without explicit time-series data.
-
-            ## CROSS-SENSOR CORRELATIONS
-            Examine relationships between sensor types:
-            - Occupancy vs device activation → Compare occupancy_detected_pct with light_on_pct, ac_on_pct; reference cross_sensor_ratios if available
-            - Environmental factors (window/door) vs HVAC usage → Use window_open_pct and ac_on_while_window_open_pct
-            - Manual override patterns → Report manual_override_counters exactly as listed; if empty, state "None recorded"
-
-            Only discuss correlations supported by direct metrics. Do not assume synchronization or causation.
-
-            ## STATISTICAL INSIGHTS
-            Interpret the statistical distributions and variance data:
-            - P99 interval outliers and their implications → Convert seconds to minutes/hours; explain what long intervals may indicate
-            - Variance patterns in runtime data → Use variance_min2 or variance_s2 to compute standard deviation where possible (e.g., √150.2 ≈ 12.26 min); compare across devices
-            - Event frequency analysis → Use on/off counts and open/close events to assess traffic or usage intensity
-
-            If variance or interval data is missing, state "Not available".
-
-            ## ACTIONABLE RECOMMENDATIONS
-            Provide specific, implementable suggestions based solely on observed data:
-            - Energy savings opportunities → Focus on reducing waste identified in ENERGY INEFFICIENCIES
-            - System optimization → Suggest investigations into high cycle counts, long runtimes, or outlier intervals
-            - Maintenance needs → Only if sensor_health_events contain entries or anomaly flags are true
-            - Automation improvements → Recommend rules like occupancy-based shutoffs or window-linked AC disable
-            - User behavior modifications → Suggest feedback or training if manual overrides or avoidable waste are present
-
-            Ensure every recommendation ties directly to a finding in prior sections.
-
-            ### STRICT RULES FOR ANALYSIS
-            - Use only the fields present in the provided JSON. Do not invent, assume, or hallucinate data.
-            - If a required metric for a section is missing, state clearly: **"Not available"**.
-            - All numerical insights must reference the exact field name and value from the JSON (e.g., "light_on_pct = 0.35").
-            - When calculating wasted energy or other derived values, show the full formula and arithmetic (e.g., 1.5 kWh × 0.02 = 0.03 kWh).
-            - Never claim temporal patterns (e.g., "usage peaks in the afternoon") unless timestamps are provided — they are not in this dataset.
-            - Maintain a professional, analytical tone. Avoid speculation or vague language.
-            - Format the response using clear section headers (##), bullet points, and concise explanations.
-            - Preserve all section titles exactly as defined above — do not merge, rename, or skip any.
-
-            Now generate the report accordingly.
-        """
-    elif report_type == "customer":  # customer report
-        return f"""You are a smart building efficiency advisor. Your role is to turn sensor data into a clear, engaging report for facility managers, property owners, and building occupants.
-
-                    Focus on outcomes that matter to people: **comfort, savings, convenience, and sustainability**. Use simple, professional, and friendly language—like explaining over coffee. Avoid jargon, formulas, acronyms, and technical units unless absolutely necessary. Translate numbers into real-world terms (e.g., cost or relatable usage).
-
-                    **SENSOR DATA:**
-                    {preprocessed_data}
-
-                    Follow this structure exactly, in order:
-
-                    ## 🚀 EXECUTIVE SUMMARY
-                    - A 1-2 sentence summary of the room's overall performance.
-                    - The top 1-2 actionable recommendations and their estimated impact (e.g., "Automating cooling could save an estimated AED 200 annually.").
-                    If data is missing or analysis is not possible: **"Not available"**.
-
-
-                    ## 🌡️ HOW IS THE ROOM PERFORMING?
-                    - Quick snapshot of comfort (temperature, air quality).
-                    - Was energy used wisely when empty?
-                    - Any open windows/doors while cooling ran?
-                    - Any red flags or positive trends?
-                    - **Optional Benchmark:** How does this room's performance compare to the building average or similar rooms? (e.g., "This room uses 15% less energy during unoccupied hours than the building average.")
-                    If data is missing: **"Not available"**.
-
-
-                    ## 💡 ENERGY WASTE: WHERE IS POWER BEING WASTED?
-                    - Lights, cooling, or devices left on in empty room?
-                    - Cooling running while windows open?
-                    - Devices turning on/off too often?
-                    For each issue:
-                    - Explain in plain terms (e.g., "Cooling ran 3 hours after room was empty").
-                    - Estimate likely cost/impact (e.g., "May add AED 45 to the bill").
-                    - Reference data clearly (e.g., "Lights on 60% of time, room occupied 35%").
-
-                    ## ⚠️ ANY WARNING SIGNS IN THE SYSTEM?
-                    - Unusual sensor/device behavior (stuck values, frequent cycling).
-                    - Equipment running much longer than expected.
-                    - Possible comfort or cost risks.
-                    - **Specific instructions:** Note any contradictory or "stale" sensor data (e.g., a temperature sensor that hasn't changed its reading in 24 hours).
-                    If none: **"No system issues detected."**
-
-                    ## 🕒 HOW IS THE ROOM BEING USED?
-                    - Occupancy frequency and patterns.
-                    - Do lights/cooling respond to entry/exit?
-                    - Are windows/doors opened often?
-                    - Any daily/weekly usage trends?
-                    If patterns can't be determined: **"Usage timing patterns cannot be determined from this data."**
-
-                    ## 🔗 WHAT'S HAPPENING WITH SENSORS AND CONTROLS?
-                    - Do systems work in sync (lights/cooling with occupancy, AC with windows)?
-                    - Are manual overrides frequent?
-                    - Note if automation could improve.
-
-                    ## ✅ WHAT CAN BE IMPROVED? (ACTIONABLE NEXT STEPS)
-                    Provide 3–5 specific, practical recommendations tied directly to the data. For each suggestion, clearly state the anticipated outcome (e.g., "This will save an estimated AED 45 per month" or "This will improve occupant comfort by reducing temperature swings."). Examples:
-                    - Automate cooling to turn off when empty.
-                    - Check/replace a faulty sensor.
-                    - Encourage staff to close windows before using AC.
-                    - Link AC to window sensors for automatic shutoff.
-                    Keep suggestions positive and solution-focused.
-
-                    ### CUSTOMER REPORT RULES
-                    - Use the exact headers above.
-                    - Never invent data; use **"Not available"** if missing.
-                    - Keep paragraphs short; use bullet points for actions.
-                    - Use emojis only in section headers.
-                    - Always stay clear, professional, and customer-friendly.
-                    - **Audience Note:** For reports intended for occupants, focus more on comfort and convenience, and less on detailed cost analysis unless it's a direct action they can take.
-
-                    """
-    else:
-        return "Invalid report type"
 
 def initialize_gemini_model(api_key: str, model_name: str):
-    """Initialize the Gemini AI model"""
+    """Initialize the Gemini AI model with deterministic settings"""
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel(model_name)
-        logger.info(f"Initialized Gemini model: {model_name}")
+        model = genai.GenerativeModel(
+            model_name,
+            generation_config=genai.GenerationConfig(
+                temperature=0.0,
+                top_p=1.0,
+                top_k=1,
+                max_output_tokens=500,
+                candidate_count=1
+            )
+        )
+        logger.info(f"Initialized deterministic Gemini model: {model_name}")
         return model
     except Exception as e:
         logger.error(f"Failed to initialize Gemini model: {e}")
         return None
 
+
 def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
-    """
-    Load and parse JSON file from disk.
-    
-    Returns:
-        Parsed JSON data as dictionary, or None if error
-    """
+    """Load and parse JSON file from disk."""
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
@@ -431,33 +265,31 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
         logger.error(f"Error loading file: {e}")
         return None
 
-def analyze_with_gemini(model, preprocessed_data: str, report_type: str, max_retries: int) -> Optional[str]:
+
+def interpret_with_gemini(model, prompt: str, max_retries: int) -> Optional[str]:
     """
-    Send preprocessed sensor data to Gemini API for analysis with retry logic.
+    Send deterministic prompt to Gemini API for interpretation.
     
     Args:
         model: Gemini model instance
-        preprocessed_data: Formatted sensor data summary
-        report_type: Type of report to generate
+        prompt: Deterministic prompt string
         max_retries: Maximum retry attempts
         
     Returns:
-        Gemini's analysis response, or None if error
+        Gemini's interpretation response, or None if error
     """
     if not model:
         logger.error("Gemini model not initialized")
         return None
     
-    prompt = get_analysis_prompt(preprocessed_data, report_type)
-    
     for attempt in range(max_retries):
         try:
-            logger.info(f"Sending data to Gemini API (attempt {attempt + 1}/{max_retries})")
+            logger.info(f"Sending deterministic prompt to Gemini API (attempt {attempt + 1}/{max_retries})")
             response = model.generate_content(prompt)
             
             if response and response.text:
-                logger.info("Successfully received analysis from Gemini API")
-                return response.text
+                logger.info("Successfully received interpretation from Gemini API")
+                return response.text.strip()
             else:
                 logger.warning("Empty response from Gemini API")
                 
@@ -472,41 +304,65 @@ def analyze_with_gemini(model, preprocessed_data: str, report_type: str, max_ret
     
     return None
 
-def get_output_file_path(day: str, report_type: str, output_dir: Path) -> Path:
+
+def parse_interpretation_response(response: str) -> Dict[str, str]:
     """
-    Generate output file path based on report type and day.
+    Parse structured interpretation response into sections.
     
     Args:
-        day: Day identifier
-        report_type: Type of report ('customer' or 'internal')
-        output_dir: Base output directory
+        response: Raw Gemini response
         
     Returns:
-        Path object for output file
+        Dictionary with parsed sections
     """
-    if report_type == "customer":
-        folder_name = "Reports-Customer"
-        filename = f"{day}_customer.txt"
-    elif report_type == "internal":
-        folder_name = "Reports-Internal"
-        filename = f"{day}_internal.txt"
-    else:
-        # Fallback
-        folder_name = "Reports"
-        filename = f"{day}_{report_type}.txt"
+    sections = {
+        "energy_efficiency": "",
+        "comfort_wellbeing": "",
+        "predictive_insights": ""
+    }
     
-    return output_dir / folder_name / filename
+    try:
+        # Look for the structured format: SECTION: [content] | SECTION: [content]
+        if "ENERGY_EFFICIENCY:" in response and "COMFORT_WELLBEING:" in response and "PREDICTIVE_INSIGHTS:" in response:
+            parts = response.split("|")
+            
+            for part in parts:
+                part = part.strip()
+                if part.startswith("ENERGY_EFFICIENCY:"):
+                    sections["energy_efficiency"] = part.replace("ENERGY_EFFICIENCY:", "").strip()
+                elif part.startswith("COMFORT_WELLBEING:"):
+                    sections["comfort_wellbeing"] = part.replace("COMFORT_WELLBEING:", "").strip()
+                elif part.startswith("PREDICTIVE_INSIGHTS:"):
+                    sections["predictive_insights"] = part.replace("PREDICTIVE_INSIGHTS:", "").strip()
+        else:
+            # Fallback: treat entire response as single interpretation
+            sections["energy_efficiency"] = response
+            
+    except Exception as e:
+        logger.warning(f"Error parsing interpretation response: {e}")
+        sections["energy_efficiency"] = response
+    
+    return sections
 
-def save_analysis_to_file(analysis: str, preprocessed_data: str, output_path: Path, json_file_path: Path, report_type: str) -> bool:
+
+def save_interpretation_results(
+    interpretation_data: Dict[str, Any],
+    raw_response: str,
+    parsed_sections: Dict[str, str],
+    output_path: Path,
+    source_file: Path,
+    report_type: str
+) -> bool:
     """
-    Save the analysis results and preprocessed data to a text file.
+    Save interpretation results to text file in the specified format.
     
     Args:
-        analysis: Gemini's analysis response
-        preprocessed_data: The preprocessed sensor data
-        output_path: Path where to save the file
-        json_file_path: Source JSON file path
-        report_type: Type of report
+        interpretation_data: Extracted data used for interpretation
+        raw_response: Raw Gemini response
+        parsed_sections: Parsed interpretation sections
+        output_path: Path to save file
+        source_file: Source JSON file path
+        report_type: Report type (customer/internal)
         
     Returns:
         True if saved successfully, False otherwise
@@ -519,41 +375,73 @@ def save_analysis_to_file(analysis: str, preprocessed_data: str, output_path: Pa
         
         with open(output_path, 'w', encoding='utf-8') as file:
             file.write(REPORT_SEPARATOR + "\n")
-            file.write("IoT SENSOR DATA ANALYSIS REPORT\n")
+            file.write("DETERMINISTIC AI INTERPRETATION REPORT\n")
             file.write(REPORT_SEPARATOR + "\n")
             file.write(f"Generated on: {timestamp}\n")
-            file.write(f"Source file: {json_file_path}\n")
+            file.write(f"Source file: {source_file}\n")
             file.write(f"Report type: {report_type}\n")
+            file.write(f"Room ID: {interpretation_data.get('room_id', 'Unknown')}\n")
+            file.write(f"Analysis Period: {interpretation_data.get('analysis_period', 'Unknown')}\n")
             file.write(REPORT_SEPARATOR + "\n\n")
             
-            file.write("PREPROCESSED SENSOR DATA:\n")
+            file.write("INTERPRETATION DATA SUMMARY:\n")
             file.write(SECTION_SEPARATOR + "\n")
-            file.write(preprocessed_data)
-            file.write("\n\n")
+            file.write(f"Efficiency Score: {interpretation_data.get('efficiency_score', 0)}\n")
+            file.write(f"Total Energy: {interpretation_data.get('total_energy_kwh', 0)} kWh\n")
+            file.write(f"Comfort Score: {interpretation_data.get('comfort_score', 0)}\n")
+            file.write(f"Manual Overrides: {interpretation_data.get('manual_overrides', 0)}\n")
+            file.write(f"System Health Events: {interpretation_data.get('system_health_events', 0)}\n")
+            file.write("\n")
             
-            file.write("GEMINI AI ANALYSIS:\n")
+            file.write("DETERMINISTIC INTERPRETATION:\n")
             file.write(SECTION_SEPARATOR + "\n")
-            file.write(analysis)
-            file.write("\n\n")
+            file.write("ENERGY EFFICIENCY ANALYSIS:\n")
+            file.write(parsed_sections["energy_efficiency"] + "\n\n")
+            
+            file.write("COMFORT & WELLBEING ANALYSIS:\n")
+            file.write(parsed_sections["comfort_wellbeing"] + "\n\n")
+            
+            file.write("PREDICTIVE INSIGHTS ANALYSIS:\n")
+            file.write(parsed_sections["predictive_insights"] + "\n\n")
+            
+            file.write("RAW GEMINI RESPONSE:\n")
+            file.write(SECTION_SEPARATOR + "\n")
+            file.write(raw_response + "\n\n")
             
             file.write(REPORT_SEPARATOR + "\n")
-            file.write("End of Report\n")
+            file.write("End of Interpretation Report\n")
             file.write(REPORT_SEPARATOR + "\n")
         
-        logger.info(f"Analysis results saved to: {output_path}")
+        logger.info(f"Interpretation results saved to: {output_path}")
         return True
         
     except Exception as e:
-        logger.error(f"Error saving analysis to file: {e}")
+        logger.error(f"Error saving interpretation results: {e}")
         return False
+
+
+def get_output_file_path(day: str, report_type: str, output_dir: Path) -> Path:
+    """Generate output file path for interpretation results."""
+    if report_type == "customer":
+        folder_name = "Reports-Customer"
+        filename = f"{day}_customer.txt"
+    elif report_type == "internal":
+        folder_name = "Reports-Internal"
+        filename = f"{day}_internal.txt"
+    else:
+        folder_name = "Reports"
+        filename = f"{day}_{report_type}.txt"
+    
+    return output_dir / folder_name / filename
+
 
 def parse_arguments() -> argparse.Namespace:
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-        description='Analyze IoT sensor data using Google Gemini API'
+        description='Generate deterministic AI interpretations of IoT sensor data'
     )
     parser.add_argument(
-        '--day', 
+        '--day',
         default=DEFAULT_DAY,
         help=f'Day identifier for the JSON file (default: {DEFAULT_DAY})'
     )
@@ -561,16 +449,16 @@ def parse_arguments() -> argparse.Namespace:
         '--report-type',
         choices=['customer', 'internal'],
         default=DEFAULT_REPORT_TYPE,
-        help=f'Type of report to generate (default: {DEFAULT_REPORT_TYPE})'
+        help=f'Type of interpretation to generate (default: {DEFAULT_REPORT_TYPE})'
     )
     parser.add_argument(
         '--input-dir',
         type=Path,
         default=Path('.'),
-        help='Directory containing input JSON files (default: current directory)'
+        help='Directory containing preprocessed JSON files (default: current directory)'
     )
     parser.add_argument(
-        '--output-dir', 
+        '--output-dir',
         type=Path,
         default=Path('.'),
         help='Base directory for output folders (default: current directory)'
@@ -595,15 +483,17 @@ def parse_arguments() -> argparse.Namespace:
     
     return parser.parse_args()
 
+
 def main() -> None:
-    """Main function to orchestrate the IoT data analysis workflow"""
+    """Main function to orchestrate the deterministic interpretation workflow"""
     args = parse_arguments()
     
     # Set logging level
     logging.getLogger().setLevel(getattr(logging, args.log_level))
     
     print(REPORT_SEPARATOR)
-    print("SIMPLIFIED IoT SENSOR DATA ANALYSIS WITH GOOGLE GEMINI")
+    print("DETERMINISTIC AI INTERPRETATION ENGINE")
+    print("IoT Sensor Data Analysis with Google Gemini")
     print(REPORT_SEPARATOR)
     print()
     
@@ -618,64 +508,83 @@ def main() -> None:
     output_file_path = get_output_file_path(args.day, args.report_type, args.output_dir)
     
     try:
-        # Step 1: Initialize model
-        logger.info("Step 1: Initializing Gemini model...")
+        # Step 1: Initialize deterministic model
+        logger.info("Step 1: Initializing deterministic Gemini model...")
         model = initialize_gemini_model(api_key, args.model)
         if not model:
             sys.exit(1)
         
-        # Step 2: Load JSON file
-        logger.info("Step 2: Loading JSON file...")
+        # Step 2: Load processed JSON file
+        logger.info("Step 2: Loading processed JSON file...")
         sensor_data = load_json_file(json_file_path)
         if sensor_data is None:
             sys.exit(1)
         
-        # Step 3: Validate structure
-        logger.info("Step 3: Validating JSON structure...")
-        if not validate_json_structure(sensor_data):
+        # Step 3: Extract interpretation data
+        logger.info("Step 3: Extracting interpretation data...")
+        interpretation_data = extract_interpretation_data(sensor_data)
+        if not interpretation_data:
+            logger.error("Failed to extract interpretation data")
             sys.exit(1)
         
-        # Step 4: Preprocess data
-        logger.info("Step 4: Preprocessing sensor data...")
-        preprocessed_data = preprocess_sensor_data(sensor_data)
-        logger.info("Data preprocessing completed")
-        
-        # Step 5: Analyze with Gemini
-        logger.info("Step 5: Analyzing with Gemini API...")
-        analysis = analyze_with_gemini(model, preprocessed_data, args.report_type, args.max_retries)
-        if analysis is None:
+        # Step 4: Create deterministic prompt
+        logger.info("Step 4: Creating deterministic prompt...")
+        prompt = create_deterministic_prompt(interpretation_data, args.report_type)
+        if not prompt:
+            logger.error("Failed to create deterministic prompt")
             sys.exit(1)
         
-        # Step 6: Display results
+        # Step 5: Generate interpretation
+        logger.info("Step 5: Generating deterministic interpretation...")
+        raw_response = interpret_with_gemini(model, prompt, args.max_retries)
+        if raw_response is None:
+            sys.exit(1)
+        
+        # Step 6: Parse interpretation response
+        logger.info("Step 6: Parsing interpretation response...")
+        parsed_sections = parse_interpretation_response(raw_response)
+        
+        # Step 7: Display results
         print("\n" + REPORT_SEPARATOR)
-        print("GEMINI ANALYSIS RESULTS")
+        print("DETERMINISTIC INTERPRETATION RESULTS")
         print(REPORT_SEPARATOR)
         print()
-        print(analysis)
+        print("ENERGY EFFICIENCY:")
+        print(parsed_sections["energy_efficiency"])
+        print()
+        print("COMFORT & WELLBEING:")
+        print(parsed_sections["comfort_wellbeing"])
+        print()
+        print("PREDICTIVE INSIGHTS:")
+        print(parsed_sections["predictive_insights"])
         print()
         print(REPORT_SEPARATOR)
         
-        # Step 7: Save results to file
-        logger.info("Step 6: Saving analysis results...")
-        save_success = save_analysis_to_file(analysis, preprocessed_data, output_file_path, json_file_path, args.report_type)
+        # Step 8: Save results
+        logger.info("Step 7: Saving interpretation results...")
+        save_success = save_interpretation_results(
+            interpretation_data, raw_response, parsed_sections,
+            output_file_path, json_file_path, args.report_type
+        )
         
         if save_success:
-            logger.info("Analysis completed successfully!")
+            logger.info("Deterministic interpretation completed successfully!")
             print(REPORT_SEPARATOR)
-            print("ANALYSIS COMPLETED SUCCESSFULLY!")
-            print(f"Report saved to: {output_file_path}")
+            print("INTERPRETATION COMPLETED SUCCESSFULLY!")
+            print(f"Results saved to: {output_file_path}")
             print(REPORT_SEPARATOR)
             sys.exit(0)
         else:
-            logger.warning("Analysis completed but could not save results to file")
+            logger.warning("Interpretation completed but could not save results")
             sys.exit(1)
             
     except Exception as e:
-        logger.error(f"Analysis workflow failed: {e}")
+        logger.error(f"Interpretation workflow failed: {e}")
         print(REPORT_SEPARATOR)
-        print("ANALYSIS FAILED - CHECK LOGS FOR DETAILS")
+        print("INTERPRETATION FAILED - CHECK LOGS FOR DETAILS")
         print(REPORT_SEPARATOR)
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

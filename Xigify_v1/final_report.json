@@ -1,0 +1,26 @@
+[
+  {
+    "final_report": {
+      "High-Level Energy Use & Cost Impact": [
+        "The director_room consumed a total of 10.5 kWh, with the AC accounting for the majority at 7.8 kWh. This dominant share highlights the AC as the primary driver of energy costs within the space."
+      ],
+      "Inefficiency Hotspots": [
+        "Notable energy wastage occurred with multiple devices operating during 'unoccupied' periods: the AC ran for 23 minutes, lights for 14 minutes, the fan for 7 minutes, and the smartplug for 48 minutes. Additionally, the AC continued running for 6 minutes despite an open window, exacerbating energy inefficiency."
+      ],
+      "Usage Patterns & Behavior": [
+        "The single manual override on the AC suggests limited user intervention, indicating either satisfactory automation or potential gaps where user needs override energy-saving measures. The absence of overrides on lighting, fan, or smartplug suggests consistent automated control or low user interaction."
+      ],
+      "Operational Health & Reliability": [
+        "All devices reported normal operational status, reflecting reliable hardware performance with no maintenance issues contributing to inefficiency."
+      ],
+      "Recommended Actions (OFF-Only)": [
+        "Implement proposed rules that power down the AC, lighting, and smartplug if 'unoccupied' status persists beyond 10 minutes, to eliminate unnecessary energy use. Attention should also be given to disabling the AC when windows are open to prevent wasted cooling."
+      ],
+      "Composite Performance Score": {
+        "score": 9.3,
+        "justification": "A high overall performance rating of 9.3/10 reflects well-managed energy use and device health, though identifiable inefficiencies during unoccupied times and window-open scenarios suggest room for improvement.",
+        "changeImpact": "Enforcing the proposed OFF-only rules targeting unoccupied periods and window-open conditions is likely to further reduce consumption and increase the efficiency score, thereby optimizing operational costs."
+      }
+    }
+  }
+]

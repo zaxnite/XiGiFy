@@ -1,114 +1,36 @@
-====================================================================================================
-IoT SENSOR DATA ANALYSIS REPORT
-====================================================================================================
-Generated on: 2025-08-19 19:44:07
-Source file: day_1.json
+================================================================================
+DETERMINISTIC AI INTERPRETATION REPORT
+================================================================================
+Generated on: 2025-08-25 19:11:06
+Source file: day_1_preprocessed.json
 Report type: customer
-====================================================================================================
+Room ID: DirectorRoom
+Analysis Period: 2025-08-11T00:00:00+08:00 to 2025-08-11T23:59:59+08:00
+================================================================================
 
-PREPROCESSED SENSOR DATA:
---------------------------------------------------
+INTERPRETATION DATA SUMMARY:
+------------------------------------------------------------
+Efficiency Score: 40.73
+Total Energy: 10.3 kWh
+Comfort Score: 77.83
+Manual Overrides: 1
+System Health Events: 0
 
-ROOM: DirectorRoom
-TIME PERIOD: 2025-08-11T00:00:00+08:00 to 2025-08-11T23:59:59+08:00
+DETERMINISTIC INTERPRETATION:
+------------------------------------------------------------
+ENERGY EFFICIENCY ANALYSIS:
+The room's energy performance is fair.  The main area for improvement is reducing wasted energy, primarily from cooling and lighting when the room is unoccupied.
 
-USAGE PATTERNS:
-- Light on: 35.0%
-- AC on: 45.0%
-- Fan on: 20.0%
-- Occupancy detected: 50.0%
-- Window open: 5.0%
-- Door open: 2.0%
+COMFORT & WELLBEING ANALYSIS:
+The room's comfort level is adequate. While generally comfortable, better alignment between lighting and occupancy could improve the experience.
 
-EFFICIENCY METRICS:
-- AC on while unoccupied: 5.0%
-- Light on while unoccupied: 2.0%
-- AC on while window open: 1.0%
+PREDICTIVE INSIGHTS ANALYSIS:
+The system is stable.  No immediate action is needed, though monitoring is recommended given one manual override.
 
-ENERGY CONSUMPTION:
-- Light: 1.5 kWh
-- AC: 8.1 kWh
-- Fan: 0.7 kWh
-- Total: 10.3 kWh
+RAW GEMINI RESPONSE:
+------------------------------------------------------------
+ENERGY_EFFICIENCY: The room's energy performance is fair.  The main area for improvement is reducing wasted energy, primarily from cooling and lighting when the room is unoccupied. | COMFORT_WELLBEING: The room's comfort level is adequate. While generally comfortable, better alignment between lighting and occupancy could improve the experience. | PREDICTIVE_INSIGHTS: The system is stable.  No immediate action is needed, though monitoring is recommended given one manual override.
 
-DEVICE ACTIVITY:
-- Light cycles: 15 on/15 off
-- AC cycles: 8 on/8 off
-- Fan cycles: 10 on/10 off
-- Door events: 45 opens
-- Occupancy events: 20 detections
-
-RUN LENGTH STATISTICS:
-- Light avg runtime: 60.1 min
-- AC avg runtime: 90.5 min
-- Fan avg runtime: 45.0 min
-- Occupancy avg duration: 75.2 min
-
-POWER DRIFT & ANOMALIES:
-- AC power average: 1200.5W
-- AC power drift detected: False
-- Light power average: 60.2W
-- Light power drift detected: False
-
-ANOMALY FLAGS:
-- AC rapid cycling: False
-- Light stuck: False
-- Occupancy sensor stuck: False
-
-SEASONAL PATTERNS:
-- AC vs weekly pattern: 2.5% deviation
-- Light vs weekly pattern: 1.1% deviation
-
-INTERVAL STATISTICS (p50/p90/p99):
-- Door open intervals: 1200/3600/7200 seconds
-- Occupancy intervals: 1800/5400/10800 seconds
-
-SENSOR HEALTH:
-- No sensor health issues detected
-
-MANUAL OVERRIDES:
-- ac: 1 overrides
-
-
-GEMINI AI ANALYSIS:
---------------------------------------------------
-## 🚀 EXECUTIVE SUMMARY
-
-The Director's Room shows reasonable energy usage, but there's room for improvement.  Lights and AC were used while the room was unoccupied for a small percentage of the time.  Automating the AC to switch off when unoccupied could save approximately AED 20 (estimated) annually, while better integration between the AC and window sensor could yield additional savings.
-
-## 🌡️ HOW IS THE ROOM PERFORMING?
-
-The room's comfort levels are generally good, based on the sensor data. The AC ran for 45% of the day, suggesting a comfortable temperature was maintained most of the time. Energy was used efficiently for the most part, with minimal wasted energy during unoccupied periods (only 5% of the time was AC on while the room was unoccupied, and 2% with lights). There was a small amount of AC use (1%) when a window was open, indicating some potential for improvement. No significant red flags were detected, although some small improvements in energy efficiency are possible.  Benchmark data is not available for comparison.
-
-
-## 💡 ENERGY WASTE: WHERE IS POWER BEING WASTED?
-
-* **Unoccupied cooling:** The AC ran for 5% of the time while the room was unoccupied, which means approximately 4 hours of the AC operating unnecessarily. This may add about AED 20 to the annual energy bill. (Data: AC on: 45%, Occupancy: 50%, AC on while unoccupied: 5%).
-* **Unoccupied lighting:**  Lights were left on for 2% of the time the room was empty, a minimal impact. (Data: Lights on: 35%, Occupancy: 50%, Lights on while unoccupied: 2%).
-* **AC running with open windows:** In 1% of the time the AC was on while a window was open, which decreases efficiency. This likely has a very minimal effect on the energy bill. (Data: AC on: 45%, Window Open: 5%, AC on while window open: 1%).
-
-
-## ⚠️ ANY WARNING SIGNS IN THE SYSTEM?
-
-No system issues detected.
-
-## 🕒 HOW IS THE ROOM BEING USED?
-
-The Director's Room was occupied approximately half the day (50%). The lights and AC were used for significant portions of the day (35% and 45% respectively), suggesting regular use. Windows and doors were opened infrequently (5% and 2% respectively). More detailed usage patterns are available for analysis in the full report.
-
-## 🔗 WHAT'S HAPPENING WITH SENSORS AND CONTROLS?
-
-The system shows some level of synchronization, as most of the AC and light usage corresponds to occupancy. However, there were instances of AC and light use when unoccupied, and AC running with the window open. There was 1 manual override of the AC. Automation could improve efficiency by aligning AC and light usage directly with occupancy and window status.
-
-## ✅ WHAT CAN BE IMPROVED? (ACTIONABLE NEXT STEPS)
-
-* **Automate AC shutdown when unoccupied:** Implementing an automated system that turns off the AC when the occupancy sensor detects emptiness will save approximately AED 20 annually. (Estimated savings based on current unoccupied AC runtime.)
-* **Link AC to window sensor:**  Connecting the AC system to the window sensor will automatically shut off the AC when a window is opened, preventing wasted energy and improving efficiency. This will improve energy efficiency with a minimal impact.
-* **Review and optimize light schedules:** Explore options for improving lighting schedules to further reduce energy consumption, possibly through timer-based dimming. This may result in cost savings. (Data: Lights on 35%).
-* **Educate occupants on best practices:** Remind occupants to close windows before activating the AC, maximizing cooling efficiency. This will slightly improve efficiency. (Data: AC on while window open: 1%)
-* **Analyze full sensor data:** A more detailed analysis of the sensor data, including the full weekly and monthly usage patterns, can provide more specific recommendations for further optimization.
-
-
-====================================================================================================
-End of Report
-====================================================================================================
+================================================================================
+End of Interpretation Report
+================================================================================
