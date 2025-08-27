@@ -293,8 +293,9 @@ def process_json_string(json_string: str) -> str:
 if __name__ == "__main__":
     # Example: Process a single file
     try:
-        processed = process_single_file("day_1.json")
-        print(f"Processed day_1.json -> day_1_preprocessed.json")
+        file = "day_5.json"
+        processed = process_single_file(file)
+        print(f"Processed "+file+" -> "+file+"_preprocessed.json")
         print(f"Efficiency Score: {processed['energy_efficiency_analysis']['efficiency_score']}")
         print(f"Comfort Score: {processed['comfort_wellbeing_analysis']['comfort_score']}")
         print(f"Risk Score: {processed['predictive_prescriptive_analysis']['risk_score']}")

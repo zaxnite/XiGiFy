@@ -1,0 +1,44 @@
+================================================================================
+DETERMINISTIC AI INTERPRETATION REPORT
+================================================================================
+Generated on: 2025-08-27 11:29:46
+Source file: day_5_preprocessed.json
+Report type: customer
+Room ID: DirectorRoom
+Analysis Period: 2025-08-18T00:00:00+08:00 to 2025-08-18T23:59:59+08:00
+================================================================================
+
+INTERPRETATION DATA SUMMARY:
+------------------------------------------------------------
+Efficiency Score: 31.55
+Total Energy: 13.8 kWh
+Comfort Score: 79.29
+Manual Overrides: 4
+System Health Events: 1
+
+DETERMINISTIC INTERPRETATION:
+------------------------------------------------------------
+ENERGY EFFICIENCY ANALYSIS:
+The room's energy performance is poor.  The main energy waste comes from the air conditioning system.
+
+COMFORT & WELLBEING ANALYSIS:
+The room's comfort level is adequate.  Improving the alignment between occupancy and lighting could enhance comfort.
+
+PREDICTIVE INSIGHTS ANALYSIS:
+The system is experiencing minor issues.  A medium priority action is recommended to address the increasing AC usage and seasonal deviation.
+
+DETERMINISTIC RULES:
+------------------------------------------------------------
+ENERGY EFFICIENCY RULES:
+  • Rule 1: LOW PRIORITY: Maintain current energy-saving practices given the current 31.55% efficiency score and 62% AC usage
+  • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to over 80% to reduce unnecessary energy consumption
+  • Rule 3: LOW PRIORITY: Continue current energy practices, with a quarterly review to ensure ongoing efficiency
+
+COMFORT & WELLBEING RULES:
+  • Rule 1: LOW PRIORITY: Maintain current comfort levels given the 79.29% comfort score and stable AC performance
+  • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to over 75% for better comfort and energy efficiency
+  • Rule 3: LOW PRIORITY: Conduct bi-annual monitoring of comfort levels to ensure consistent performance
+
+================================================================================
+End of Interpretation Report
+================================================================================

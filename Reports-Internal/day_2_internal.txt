@@ -1,0 +1,44 @@
+================================================================================
+DETERMINISTIC AI INTERPRETATION REPORT
+================================================================================
+Generated on: 2025-08-26 21:26:23
+Source file: day_2_preprocessed.json
+Report type: internal
+Room ID: DirectorRoom
+Analysis Period: 2025-08-12T00:00:00+08:00 to 2025-08-12T23:59:59+08:00
+================================================================================
+
+INTERPRETATION DATA SUMMARY:
+------------------------------------------------------------
+Efficiency Score: 38.11
+Total Energy: 10.95 kWh
+Comfort Score: 77.33
+Manual Overrides: 2
+System Health Events: 1
+
+DETERMINISTIC INTERPRETATION:
+------------------------------------------------------------
+ENERGY EFFICIENCY ANALYSIS:
+The overall energy performance is poor, indicated by an efficiency score of 38.11. The primary source of energy waste is AC usage during unoccupied periods (0.06 waste score), followed by lighting waste (0.02).
+
+COMFORT & WELLBEING ANALYSIS:
+The overall comfort level is adequate, with a comfort score of 77.33.  The primary area for improvement is optimizing occupancy-light alignment, currently at 69.2%.
+
+PREDICTIVE INSIGHTS ANALYSIS:
+The system stability is currently showing minor issues, indicated by an increasing AC usage trend.  A medium priority action is recommended to investigate and address the rising AC usage.
+
+DETERMINISTIC RULES:
+------------------------------------------------------------
+ENERGY EFFICIENCY RULES:
+  • ENERGY_RULE_1: MEDIUM - Optimize AC scheduling to reduce unoccupied runtime (device ratio: 0.48) and implement occupancy-based lighting controls;
+  • ENERGY_RULE_2: MEDIUM - Monitor fan usage efficiency (current ratio: 0.21) to identify energy optimization opportunities;
+  • ENERGY_RULE_3: MEDIUM - Maintain current energy performance baseline and schedule periodic efficiency reviews
+
+COMFORT & WELLBEING RULES:
+  • COMFORT_RULE_1: MEDIUM - Optimize occupancy-light alignment to exceed 75% (current: 69.2%);
+  • COMFORT_RULE_2: MEDIUM - Maintain AC runtime stability at current level (0.78) and monitor temperature control;
+  • COMFORT_RULE_3: LOW - Schedule quarterly comfort assessment reviews and minor system calibrations
+
+================================================================================
+End of Interpretation Report
+================================================================================

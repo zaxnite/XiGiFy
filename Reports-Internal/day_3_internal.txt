@@ -1,0 +1,44 @@
+================================================================================
+DETERMINISTIC AI INTERPRETATION REPORT
+================================================================================
+Generated on: 2025-08-27 11:27:00
+Source file: day_3_preprocessed.json
+Report type: internal
+Room ID: DirectorRoom
+Analysis Period: 2025-08-13T00:00:00+08:00 to 2025-08-13T23:59:59+08:00
+================================================================================
+
+INTERPRETATION DATA SUMMARY:
+------------------------------------------------------------
+Efficiency Score: 37.92
+Total Energy: 11.75 kWh
+Comfort Score: 78.2
+Manual Overrides: 4
+System Health Events: 1
+
+DETERMINISTIC INTERPRETATION:
+------------------------------------------------------------
+ENERGY EFFICIENCY ANALYSIS:
+The overall energy performance is poor, with an efficiency score of 37.92%. The primary source of energy waste is AC waste during unoccupied periods (0.08) and light waste during unoccupied periods (0.03).
+
+COMFORT & WELLBEING ANALYSIS:
+The overall comfort level is adequate, with a comfort score of 78.2.  The primary comfort issue is the suboptimal occupancy-light alignment of 72.9%, indicating potential for improvement.
+
+PREDICTIVE INSIGHTS ANALYSIS:
+The system stability is currently showing minor issues due to an upward trend in AC usage.  A medium priority action is recommended to investigate and potentially adjust AC settings.
+
+DETERMINISTIC RULES:
+------------------------------------------------------------
+ENERGY EFFICIENCY RULES:
+  • Rule 1: LOW PRIORITY: Maintain current energy performance given the 37.92% efficiency score and 52% AC usage
+  • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to exceed 80% to reduce energy waste
+  • Rule 3: LOW PRIORITY: Continue current energy-saving practices with quarterly reviews to maintain the current 37.92% efficiency
+
+COMFORT & WELLBEING RULES:
+  • Rule 1: LOW PRIORITY: Maintain current comfort levels given the 78.2% comfort score and stable AC runtime of 0.8
+  • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to exceed 75% to enhance comfort and reduce unnecessary energy consumption
+  • Rule 3: LOW PRIORITY: Conduct bi-annual monitoring of comfort levels to ensure continued optimal performance at the current 78.2% comfort score
+
+================================================================================
+End of Interpretation Report
+================================================================================

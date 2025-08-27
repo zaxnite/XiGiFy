@@ -1,0 +1,44 @@
+================================================================================
+DETERMINISTIC AI INTERPRETATION REPORT
+================================================================================
+Generated on: 2025-08-26 21:28:15
+Source file: day_2_preprocessed.json
+Report type: customer
+Room ID: DirectorRoom
+Analysis Period: 2025-08-12T00:00:00+08:00 to 2025-08-12T23:59:59+08:00
+================================================================================
+
+INTERPRETATION DATA SUMMARY:
+------------------------------------------------------------
+Efficiency Score: 38.11
+Total Energy: 10.95 kWh
+Comfort Score: 77.33
+Manual Overrides: 2
+System Health Events: 1
+
+DETERMINISTIC INTERPRETATION:
+------------------------------------------------------------
+ENERGY EFFICIENCY ANALYSIS:
+Energy performance is poor.  The main area for improvement is reducing wasted energy from air conditioning.
+
+COMFORT & WELLBEING ANALYSIS:
+The room's comfort level is adequate.  Improving the relationship between lighting and occupancy would enhance comfort.
+
+PREDICTIVE INSIGHTS ANALYSIS:
+The system is relatively stable, but air conditioning usage is increasing.  It's recommended to monitor this trend closely.
+
+DETERMINISTIC RULES:
+------------------------------------------------------------
+ENERGY EFFICIENCY RULES:
+  • ENERGY_RULE_1: MEDIUM - Optimize AC scheduling to reduce unoccupied runtime (device ratio: 0.48) and implement occupancy-based lighting controls;
+  • ENERGY_RULE_2: MEDIUM - Monitor fan usage efficiency (current ratio: 0.21) to identify energy optimization opportunities;
+  • ENERGY_RULE_3: MEDIUM - Maintain current energy performance baseline and schedule periodic efficiency reviews
+
+COMFORT & WELLBEING RULES:
+  • COMFORT_RULE_1: MEDIUM - Optimize occupancy-light alignment to exceed 75% (current: 69.2%);
+  • COMFORT_RULE_2: MEDIUM - Maintain AC runtime stability at current level (0.78) and monitor temperature control;
+  • COMFORT_RULE_3: LOW - Schedule quarterly comfort assessment reviews and minor system calibrations
+
+================================================================================
+End of Interpretation Report
+================================================================================
