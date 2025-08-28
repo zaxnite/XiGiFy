@@ -1,7 +1,7 @@
 ================================================================================
 DETERMINISTIC AI INTERPRETATION REPORT
 ================================================================================
-Generated on: 2025-08-27 11:29:46
+Generated on: 2025-08-28 17:16:25
 Source file: day_5_preprocessed.json
 Report type: customer
 Room ID: DirectorRoom
@@ -32,12 +32,12 @@ DETERMINISTIC RULES:
 ENERGY EFFICIENCY RULES:
   • Rule 1: LOW PRIORITY: Maintain current energy-saving practices given the current 31.55% efficiency score and 62% AC usage
   • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to over 80% to reduce unnecessary energy consumption
-  • Rule 3: LOW PRIORITY: Continue current energy practices, with a quarterly review to ensure ongoing efficiency
+  • Rule 3: LOW PRIORITY: Continue current energy-efficient practices, with a review every three months
 
 COMFORT & WELLBEING RULES:
   • Rule 1: LOW PRIORITY: Maintain current comfort levels given the 79.29% comfort score and stable AC performance
-  • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to over 75% for better comfort and energy efficiency
-  • Rule 3: LOW PRIORITY: Conduct bi-annual monitoring of comfort levels to ensure consistent performance
+  • Rule 2: MEDIUM PRIORITY: Improve occupancy-light alignment to over 75% for better comfort
+  • Rule 3: LOW PRIORITY: Monitor comfort levels every six months to ensure continued optimal performance
 
 ================================================================================
 End of Interpretation Report
