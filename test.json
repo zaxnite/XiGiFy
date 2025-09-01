@@ -1,0 +1,134 @@
+{
+  "_id": "68add0b54205c04c638695d0",
+  "room_id": "OFFICELOBBY",
+  "summary_window": {
+    "start": "2025-08-26T15:15:00",
+    "end": "2025-08-26T15:20:00"
+  },
+  "ml_abstracted_metrics": {
+    "occupancy_score": 0.0,
+    "energy_consumption_score": 0.0,
+    "activity_variance": 0.0,
+    "anomaly_likelihood": 1.0,
+    "connectivity_score": 0.0
+  },
+  "cross_sensor_ratios": {
+    "light_to_occupancy_ratio": 0.0,
+    "ac_to_occupancy_ratio": 0.0,
+    "ac_to_window_ratio": 0.0,
+    "sensor_to_occupancy_ratio": 0.0,
+    "energy_per_occupancy_minute": 0.0
+  },
+  "inter_event_distributions": {
+    "power": {
+      "mean": 20.0,
+      "std_dev": 0.0,
+      "min": 20.0,
+      "max": 20.0
+    },
+    "occupancy_intervals_s": {
+      "pattern_deviation_flags": {
+        "unexpected_energy_consumption": false,
+        "off_hour_activity": false,
+        "prolonged_unoccupancy": true,
+        "device_state_mismatch": false,
+        "poor_connectivity": true,
+        "sensor_anomaly": false
+      }
+    }
+  },
+  "rolling_statistics_and_drift": {
+    "power_power_avg_w": 0.0,
+    "power_power_variance": 0.0,
+    "power_power_drift_flag": false,
+    "power_voltage_avg": 0.0,
+    "power_voltage_variance": 0.0
+  },
+  "run_length_statistics": {
+    "light": {
+      "avg_min": 0.0,
+      "variance_min2": 0.0
+    },
+    "ac": {
+      "avg_min": 0.0,
+      "variance_min2": 0.0
+    },
+    "fan": {
+      "avg_min": 0.0,
+      "variance_min2": 0.0
+    },
+    "occupancy": {
+      "avg_min": 0.0,
+      "variance_min2": 0.0
+    },
+    "window": {
+      "avg_min": 0.0,
+      "variance_min2": 0.0
+    },
+    "door": {
+      "avg_s": 0.0,
+      "variance_s2": 0.0
+    },
+    "switch": {
+      "avg_min": 0.0,
+      "variance_min2": 0.0
+    }
+  },
+  "runtime_features": {
+    "light_active_pct": 0.0,
+    "ac_active_pct": 0.0,
+    "fan_active_pct": 0.0,
+    "occupancy_active_pct": 0.0,
+    "window_active_pct": 0.0,
+    "door_active_pct": 0.0,
+    "switch_active_pct": 0.0
+  },
+  "seasonal_pattern_summaries": {
+    "ac_vs_weekly_pct": 100.0,
+    "light_vs_weekly_pct": 100.0,
+    "occupancy_vs_weekly_pct": 100.0
+  },
+  "usage_features": {
+    "light_on_pct": 0.0,
+    "ac_on_pct": 0.0,
+    "fan_on_pct": 0.0,
+    "occupancy_on_pct": 0.0,
+    "window_on_pct": 0.0,
+    "door_on_pct": 0.0,
+    "switch_on_pct": 0.0,
+    "power_on_pct": 0.0,
+    "sensor_on_pct": 0.0,
+    "controller_on_pct": 0.0,
+    "temperature_reporting_pct": 0.0,
+    "humidity_reporting_pct": 0.0,
+    "voltage_reporting_pct": 1.0,
+    "signal_reporting_pct": 0.0
+  },
+  "raw_stream_derived_metrics": {
+    "message_count": 15,
+    "device_type_distribution": {
+      "power": 15
+    },
+    "avg_message_latency_ms": 181262.0,
+    "keep_alive_ratio": 0.0
+  },
+  "event_counts_and_timing": {
+    "power": {
+      "on_count": 0,
+      "off_count": 15,
+      "first_seen": "2025-08-26T15:15:00",
+      "last_seen": "2025-08-26T15:19:40"
+    }
+  },
+  "manual_override_counters": {
+    "total_manual_switches": 0,
+    "out_of_hour_manual_switches": 0,
+    "override_duration_s": 0.0
+  },
+  "sensor_metrics": {
+    "power_voltage_avg": 0.0,
+    "power_voltage_min": 0.0,
+    "power_voltage_max": 0.0,
+    "power_voltage_std_dev": 0.0
+  }
+}
